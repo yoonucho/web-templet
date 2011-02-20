@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<decorators defaultdir="/decorators">
+
+	<decorator name="templet_main" page="/WEB-INF/sitemesh/main.jsp">
+		<pattern>/WEB-INF/jsp/*</pattern>
+	</decorator>
+
+<!--	키타-->
+	<decorator name="tl-cs-blue_EX" page="/theme/tving/tl-cs-blue-main_EX.jsp">
+		<pattern>/WEB-INF/jsp/*</pattern>
+	</decorator>							
+</decorators>
