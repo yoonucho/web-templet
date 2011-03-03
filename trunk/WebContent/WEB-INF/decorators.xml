@@ -7,7 +7,7 @@
 	</decorator>
 
 <!--	키타-->
-	<decorator name="tl-cs-blue_EX" page="/theme/tving/tl-cs-blue-main_EX.jsp">
+	<decorator name="shop_EX" page="/WEB-INF/jsp/common/telmplet.jsp">
 		<pattern>/WEB-INF/jsp/*</pattern>
 	</decorator>							
 </decorators>
