@@ -37,20 +37,17 @@
 	<insert id="BDMA030T" parameterType="java.util.HashMap"
 		>
 		insert into brd(
-		brd_seq_no,brd_type,brd_title,brd_hit,content,reg_id,reg_nm,reg_dt,udt_id,udt_nm,udt_dt
+		brd_seq_no,brd_type,brd_title,brd_hit,content,reg_id,reg_nm,reg_dt
 		)
 		values(
 		#{brd_seq_no},
 		#{brd_type},
 		#{brd_title},
-		#{brd_hit},
+		0,
 		#{content},
 		#{reg_id},
 		#{reg_nm},
-		#{reg_dt},
-		#{udt_id},
-		#{udt_nm},
-		#{udt_dt}
+		DATE_FORMAT(now(),'%Y%m%d%H%i%S')
 		)
 
   </insert>
