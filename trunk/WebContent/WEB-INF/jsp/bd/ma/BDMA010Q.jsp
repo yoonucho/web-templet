@@ -1,5 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/jsp/common/include/taglibs.jsp"%>
 <html>
 <head>
 <title>게시판</title>
@@ -88,103 +89,54 @@ $(document).ready(function(){
 				<table border="0" width="100%" cellpadding="0" cellspacing="0" id="product-table">
 				<tr>
 					<th class="table-header-check"><a id="toggle-all" ></a> </th>
-					<th class="table-header-repeat line-left minwidth-1"><a href="">Last Name</a>	</th>
-					<th class="table-header-repeat line-left minwidth-1"><a href="">First Name</a></th>
-					<th class="table-header-repeat line-left"><a href="">Email</a></th>
-					<th class="table-header-repeat line-left"><a href="">Due</a></th>
-					<th class="table-header-repeat line-left"><a href="">Website</a></th>
-					<th class="table-header-options line-left"><a href="">Options</a></th>
+					<th class="table-header-repeat line-left minwidth-1"><a href="">번호</a>	</th>
+					<th class="table-header-repeat line-left minwidth-1"><a href="">제목</a></th>
+					<th class="table-header-repeat line-left"><a href="">등록자</a></th>
+					<th class="table-header-repeat line-left"><a href="">등록일</a></th>
+					<th class="table-header-repeat line-left"><a href="">조회수</a></th>
 				</tr>
-				<tr>
+<c:if test="${paginationInfo.list !=null }">
+	<c:forEach var="map" items="${paginationInfo.list}" varStatus="status">
+				<tr <c:if test="${(status.count mod 2)==0 }">class="alternate-row"</c:if>>
 					<td><input  type="checkbox"/></td>
 					<td>Sabev</td>
-					<td>George</td>
-					<td><a href="">george@mainevent.co.za</a></td>
-					<td>R250</td>
-					<td><a href="">www.mainevent.co.za</a></td>
-					<td class="options-width">
-					<a href="" title="Edit" class="icon-1 info-tooltip"></a>
-					<a href="" title="Edit" class="icon-2 info-tooltip"></a>
-					<a href="" title="Edit" class="icon-3 info-tooltip"></a>
-					<a href="" title="Edit" class="icon-4 info-tooltip"></a>
-					<a href="" title="Edit" class="icon-5 info-tooltip"></a>
-					</td>
+					<td>${map.brd_title }</td>
+					<td>${map.reg_nm }</td>
+					<td>${map.reg_dt }</td>
+					<td>${map.brd_hit }</td>
 				</tr>
-				<tr class="alternate-row">
-					<td><input  type="checkbox"/></td>
-					<td>Sabev</td>
-					<td>George</td>
-					<td><a href="">george@mainevent.co.za</a></td>
-					<td>R250</td>
-					<td><a href="">www.mainevent.co.za</a></td>
-					<td class="options-width">
-					<a href="" title="Edit" class="icon-1 info-tooltip"></a>
-					<a href="" title="Edit" class="icon-2 info-tooltip"></a>
-					<a href="" title="Edit" class="icon-3 info-tooltip"></a>
-					<a href="" title="Edit" class="icon-4 info-tooltip"></a>
-					<a href="" title="Edit" class="icon-5 info-tooltip"></a>
-					</td>
-				</tr>
-				<tr>
-					<td><input  type="checkbox"/></td>
-					<td>Sabev</td>
-					<td>George</td>
-					<td><a href="">george@mainevent.co.za</a></td>
-					<td>R250</td>
-					<td><a href="">www.mainevent.co.za</a></td>
-					<td class="options-width">
-					<a href="" title="Edit" class="icon-1 info-tooltip"></a>
-					<a href="" title="Edit" class="icon-2 info-tooltip"></a>
-					<a href="" title="Edit" class="icon-3 info-tooltip"></a>
-					<a href="" title="Edit" class="icon-4 info-tooltip"></a>
-					<a href="" title="Edit" class="icon-5 info-tooltip"></a>
-					</td>
-				</tr>
-				<tr class="alternate-row">
-					<td><input  type="checkbox"/></td>
-					<td>Sabev</td>
-					<td>George</td>
-					<td><a href="">george@mainevent.co.za</a></td>
-					<td>R250</td>
-					<td><a href="">www.mainevent.co.za</a></td>
-					<td class="options-width">
-					<a href="" title="Edit" class="icon-1 info-tooltip"></a>
-					<a href="" title="Edit" class="icon-2 info-tooltip"></a>
-					<a href="" title="Edit" class="icon-3 info-tooltip"></a>
-					<a href="" title="Edit" class="icon-4 info-tooltip"></a>
-					<a href="" title="Edit" class="icon-5 info-tooltip"></a>
-					</td>
-				</tr>
-				<tr>
-					<td><input  type="checkbox"/></td>
-					<td>Sabev</td>
-					<td>George</td>
-					<td><a href="">george@mainevent.co.za</a></td>
-					<td>R250</td>
-					<td><a href="">www.mainevent.co.za</a></td>
-					<td class="options-width">
-					<a href="" title="Edit" class="icon-1 info-tooltip"></a>
-					<a href="" title="Edit" class="icon-2 info-tooltip"></a>
-					<a href="" title="Edit" class="icon-3 info-tooltip"></a>
-					<a href="" title="Edit" class="icon-4 info-tooltip"></a>
-					<a href="" title="Edit" class="icon-5 info-tooltip"></a>
-					</td>
-				</tr>
-				<tr class="alternate-row">
-					<td><input  type="checkbox"/></td>
-					<td>Sabev</td>
-					<td>George</td>
-					<td><a href="">george@mainevent.co.za</a></td>
-					<td>R250</td>
-					<td><a href="">www.mainevent.co.za</a></td>
-					<td class="options-width">
-					<a href="" title="Edit" class="icon-1 info-tooltip"></a>
-					<a href="" title="Edit" class="icon-2 info-tooltip"></a>
-					<a href="" title="Edit" class="icon-3 info-tooltip"></a>
-					<a href="" title="Edit" class="icon-4 info-tooltip"></a>
-					<a href="" title="Edit" class="icon-5 info-tooltip"></a>
-					</td>
-				</tr>
+	</c:forEach>
+</c:if>
+<!-- 				<tr> -->
+<!-- 					<td><input  type="checkbox"/></td> -->
+<!-- 					<td>Sabev</td> -->
+<!-- 					<td>George</td> -->
+<!-- 					<td><a href="">george@mainevent.co.za</a></td> -->
+<!-- 					<td>R250</td> -->
+<!-- 					<td><a href="">www.mainevent.co.za</a></td> -->
+<!-- 					<td class="options-width"> -->
+<!-- 					<a href="" title="Edit" class="icon-1 info-tooltip"></a> -->
+<!-- 					<a href="" title="Edit" class="icon-2 info-tooltip"></a> -->
+<!-- 					<a href="" title="Edit" class="icon-3 info-tooltip"></a> -->
+<!-- 					<a href="" title="Edit" class="icon-4 info-tooltip"></a> -->
+<!-- 					<a href="" title="Edit" class="icon-5 info-tooltip"></a> -->
+<!-- 					</td> -->
+<!-- 				</tr> -->
+<!-- 				<tr class="alternate-row"> -->
+<!-- 					<td><input  type="checkbox"/></td> -->
+<!-- 					<td>Sabev</td> -->
+<!-- 					<td>George</td> -->
+<!-- 					<td><a href="">george@mainevent.co.za</a></td> -->
+<!-- 					<td>R250</td> -->
+<!-- 					<td><a href="">www.mainevent.co.za</a></td> -->
+<!-- 					<td class="options-width"> -->
+<!-- 					<a href="" title="Edit" class="icon-1 info-tooltip"></a> -->
+<!-- 					<a href="" title="Edit" class="icon-2 info-tooltip"></a> -->
+<!-- 					<a href="" title="Edit" class="icon-3 info-tooltip"></a> -->
+<!-- 					<a href="" title="Edit" class="icon-4 info-tooltip"></a> -->
+<!-- 					<a href="" title="Edit" class="icon-5 info-tooltip"></a> -->
+<!-- 					</td> -->
+<!-- 				</tr> -->
 				</table>
 				<!--  end product-table................................... --> 
 				</form>
@@ -238,7 +190,7 @@ $(document).ready(function(){
 	</tr>
 	</table>
 	<div class="clear">&nbsp;</div>
-
+<a href="${pageContext.request.contextPath}/bd/ma/BDMA020Q.do" >등록</a>
 
 </body>
 </html>
