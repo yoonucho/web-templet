@@ -59,6 +59,9 @@ public class SMCommonUtil {
 		
 		for(int i=0; i< files.length ; i++){
 //			String key = iterator.next();
+			if(map.get(files[i])==null){
+				continue;
+			}
 			LinkedList df = (LinkedList) map.get(files[i]);
 			CommonsMultipartFile fileInfo = (CommonsMultipartFile) df.getFirst();
 			
@@ -74,16 +77,16 @@ public class SMCommonUtil {
 					fDir.mkdirs();
 				}
 				if(rename){
-					File file1 = new File(filePath+upMooPath+formatDate);
+					File file1 = new File(filePath+upMooPath+File.separator+formatDate);
 					fileInfo.transferTo(file1);
 					
-					returnMap.put(files[i], urlFilePath+formatDate);
+					returnMap.put(files[i], urlFilePath+"/"+formatDate);
 					returnMap.put(files[i]+"_nm", fileInfo.getOriginalFilename());
 					
 				}else{
-					File file1 = new File(filePath+upMooPath+formatDate+fileInfo.getName()+extName);
+					File file1 = new File(filePath+upMooPath+File.separator+formatDate+fileInfo.getName()+extName);
 					fileInfo.transferTo(file1);
-					returnMap.put(files[i], urlFilePath+formatDate+fileInfo.getName()+extName);
+					returnMap.put(files[i], urlFilePath+"/"+formatDate+fileInfo.getName()+extName);
 					returnMap.put(files[i]+"_nm", fileInfo.getOriginalFilename());
 				}
 			}
