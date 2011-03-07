@@ -4,27 +4,72 @@
 
 <mapper namespace="BD">
 
-  <select id="BDMA010CNTQ" parameterType="string" resultType="int">
-    select count(*) as CNT
-  from brd a
+	<select id="BDMA010CNTQ" parameterType="string" resultType="int">
+		select count(*) as CNT
+		from brd a
+
+  </select>
+
+	<select id="BDMA010Q" parameterType="java.util.HashMap"
+		resultType="java.util.HashMap">
+		select a.brd_seq_no,
+		a.brd_type,
+		a.brd_title,
+		a.brd_hit,
+		a.content,
+		a.reg_id,
+		a.reg_nm,
+		a.reg_dt,
+		a.udt_id,
+		a.udt_nm,
+		a.udt_dt
+		from
+		brd a
+	
+  </select>
+
+	<select id="BDMA030Q" parameterType="java.util.HashMap"
+		resultType="String">
+		select ifnull(max(brd_seq_no), 1) as cnt from brd
 
   </select>
   
-  <select id="BDMA010Q" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-    select a.brd_seq_no,
-       a.brd_type,
-       a.brd_title,
-       a.brd_hit,
-       a.content,
-       a.reg_id,
-       a.reg_nm,
-       a.reg_dt,
-       a.udt_id,
-       a.udt_nm,
-       a.udt_dt
-  from brd a
-	
-  </select>
+	<insert id="BDMA030T" parameterType="java.util.HashMap"
+		>
+		insert into brd(
+		brd_seq_no,brd_type,brd_title,brd_hit,content,reg_id,reg_nm,reg_dt,udt_id,udt_nm,udt_dt
+		)
+		values(
+		#{brd_seq_no},
+		#{brd_type},
+		#{brd_title},
+		#{brd_hit},
+		#{content},
+		#{reg_id},
+		#{reg_nm},
+		#{reg_dt},
+		#{udt_id},
+		#{udt_nm},
+		#{udt_dt}
+		)
+
+  </insert>
+
+	<insert id="BDMA030FILET" parameterType="java.util.HashMap"
+		>
+		insert into brd_file(
+		brd_seq_no,file_seq_no,m_file_nm,v_file_nm,reg_dt,reg_id,reg_nm )
+		values(#{brd_seq_no},
+		#{file_seq_no},
+		#{m_file_nm},
+		#{v_file_nm},
+		#{reg_dt},
+		#{reg_id},
+		#{reg_nm} )
+
+
+  </insert>
+
 
 
 </mapper>
