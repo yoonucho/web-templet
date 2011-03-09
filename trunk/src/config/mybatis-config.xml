@@ -9,6 +9,11 @@
 		<setting name="lazyLoadingEnabled" value="false" />
 	</settings>
 
+
+	<typeAliases>
+		<typeAlias alias="BDMAVo" type="com.hw.shop.bd.ma.vo.BDMAVo" />
+		<typeAlias alias="USMAVo" type="com.hw.shop.us.ma.vo.USMAVo" />
+	</typeAliases>
 	<mappers>
 		<mapper resource="sqlmap/BD.xml" />
 	</mappers>

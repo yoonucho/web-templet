@@ -30,7 +30,7 @@
 	<bean id="viewResolver"
     	class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="0"/>
 
-<!--	<bean id="download" class="svc.gisce.util.DownloadView" />-->
+	<bean id="download" class="com.hw.shop.util.DownloadView" />
 
 	<!--파일업로드 시작-->
 	<bean id="multipartResolver"
