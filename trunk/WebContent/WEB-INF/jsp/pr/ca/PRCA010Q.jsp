@@ -38,36 +38,103 @@ $(document).ready(function(){
 		
 			<!--  start table-content  -->
 			<div id="table-content">
+			
+				<!--  start message-yellow -->
+				<div id="message-yellow">
+				<table border="0" width="100%" cellpadding="0" cellspacing="0">
+				<tr>
+					<td class="yellow-left">You have a new message. <a href="">Go to Inbox.</a></td>
+					<td class="yellow-right"><a class="close-yellow"><img src="${pageContext.request.contextPath}/images/table/icon_close_yellow.gif"   alt="" /></a></td>
+				</tr>
+				</table>
+				</div>
+				<!--  end message-yellow -->
+				
+				<!--  start message-red -->
+				<div id="message-red">
+				<table border="0" width="100%" cellpadding="0" cellspacing="0">
+				<tr>
+					<td class="red-left">Error. <a href="">Please try again.</a></td>
+					<td class="red-right"><a class="close-red"><img src="${pageContext.request.contextPath}/images/table/icon_close_red.gif"   alt="" /></a></td>
+				</tr>
+				</table>
+				</div>
+				<!--  end message-red -->
+				
+				<!--  start message-blue -->
+				<div id="message-blue">
+				<table border="0" width="100%" cellpadding="0" cellspacing="0">
+				<tr>
+					<td class="blue-left">Welcome back. <a href="">View my account.</a> </td>
+					<td class="blue-right"><a class="close-blue"><img src="${pageContext.request.contextPath}/images/table/icon_close_blue.gif"   alt="" /></a></td>
+				</tr>
+				</table>
+				</div>
+				<!--  end message-blue -->
+			
+				<!--  start message-green -->
+				<div id="message-green">
+				<table border="0" width="100%" cellpadding="0" cellspacing="0">
+				<tr>
+					<td class="green-left">Product added sucessfully. <a href="">Add new one.</a></td>
+					<td class="green-right"><a class="close-green"><img src="${pageContext.request.contextPath}/images/table/icon_close_green.gif"   alt="" /></a></td>
+				</tr>
+				</table>
+				</div>
+				<!--  end message-green -->
+		
 		 
 				<!--  start product-table ..................................................................................... -->
-				<form id="mainform" action="" method="get">
-				<input type="text" name="src_title" value="${param.src_title }" />
-				<input type="submit" value="검색" /><br/>
-				페이지 번호:<input type="text" name="currentPageNo" value="${paginationInfo.currentPageNo }" />
-				총페이지 : <input type="text" name="totalRecordCount" value="${paginationInfo.totalPageCount }" />
+				<form id="mainform" action="">
 				<table border="0" width="100%" cellpadding="0" cellspacing="0" id="product-table">
 				<tr>
 					<th class="table-header-check"><a id="toggle-all" ></a> </th>
-					<th class="table-header-repeat line-left minwidth-1"><a href="">번호</a>	</th>
-					<th class="table-header-repeat line-left minwidth-1"><a href="">제목</a></th>
+					<th class="table-header-repeat line-left minwidth-1"><a href="">카테고리명</a></th>
 					<th class="table-header-repeat line-left"><a href="">등록자</a></th>
 					<th class="table-header-repeat line-left"><a href="">등록일</a></th>
-					<th class="table-header-repeat line-left"><a href="">조회수</a></th>
 				</tr>
 <c:if test="${paginationInfo.list !=null }">
 	<c:forEach var="map" items="${paginationInfo.list}" varStatus="status">
 				<tr <c:if test="${(status.count mod 2)==0 }">class="alternate-row"</c:if>>
 					<td><input  type="checkbox"/></td>
-					<td>Sabev</td>
 					<td>
-						<a href="${pageContext.request.contextPath}/bd/ma/BDMA070Q.do?brd_seq_no=${map.brd_seq_no }">${map.brd_title }</a>
+						<a href="${pageContext.request.contextPath}/pr/ca/PRCA030Q.do?cate_seq_no=${map.cate_seq_no }">${map.cate_nm }</a>
 					</td>
 					<td>${map.reg_nm }</td>
 					<td>${map.reg_dt }</td>
-					<td>${map.brd_hit }</td>
 				</tr>
 	</c:forEach>
 </c:if>
+<!-- 				<tr> -->
+<!-- 					<td><input  type="checkbox"/></td> -->
+<!-- 					<td>Sabev</td> -->
+<!-- 					<td>George</td> -->
+<!-- 					<td><a href="">george@mainevent.co.za</a></td> -->
+<!-- 					<td>R250</td> -->
+<!-- 					<td><a href="">www.mainevent.co.za</a></td> -->
+<!-- 					<td class="options-width"> -->
+<!-- 					<a href="" title="Edit" class="icon-1 info-tooltip"></a> -->
+<!-- 					<a href="" title="Edit" class="icon-2 info-tooltip"></a> -->
+<!-- 					<a href="" title="Edit" class="icon-3 info-tooltip"></a> -->
+<!-- 					<a href="" title="Edit" class="icon-4 info-tooltip"></a> -->
+<!-- 					<a href="" title="Edit" class="icon-5 info-tooltip"></a> -->
+<!-- 					</td> -->
+<!-- 				</tr> -->
+<!-- 				<tr class="alternate-row"> -->
+<!-- 					<td><input  type="checkbox"/></td> -->
+<!-- 					<td>Sabev</td> -->
+<!-- 					<td>George</td> -->
+<!-- 					<td><a href="">george@mainevent.co.za</a></td> -->
+<!-- 					<td>R250</td> -->
+<!-- 					<td><a href="">www.mainevent.co.za</a></td> -->
+<!-- 					<td class="options-width"> -->
+<!-- 					<a href="" title="Edit" class="icon-1 info-tooltip"></a> -->
+<!-- 					<a href="" title="Edit" class="icon-2 info-tooltip"></a> -->
+<!-- 					<a href="" title="Edit" class="icon-3 info-tooltip"></a> -->
+<!-- 					<a href="" title="Edit" class="icon-4 info-tooltip"></a> -->
+<!-- 					<a href="" title="Edit" class="icon-5 info-tooltip"></a> -->
+<!-- 					</td> -->
+<!-- 				</tr> -->
 				</table>
 				<!--  end product-table................................... --> 
 				</form>
@@ -121,7 +188,8 @@ $(document).ready(function(){
 	</tr>
 	</table>
 	<div class="clear">&nbsp;</div>
-<a href="${pageContext.request.contextPath}/bd/ma/BDMA020Q.do" >등록</a>
+<a href="${pageContext.request.contextPath}/pr/ca/PRCA020Q.do" >등록</a>
+<a href="${pageContext.request.contextPath}/pr/ca/PRCA020Q.do" >삭제</a>
 
 </body>
 </html>
