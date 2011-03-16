@@ -11,11 +11,19 @@
 
 
 	<typeAliases>
+		<typeAlias alias="SearchVo" type="com.hw.shop.common.SearchVo" />
+		<typeAlias alias="CodeVo" type="com.hw.shop.common.CodeVo" />
+		
 		<typeAlias alias="BDMAVo" type="com.hw.shop.bd.ma.vo.BDMAVo" />
 		<typeAlias alias="USMAVo" type="com.hw.shop.us.ma.vo.USMAVo" />
+		<typeAlias alias="PRMAVo" type="com.hw.shop.pr.ma.vo.PRMAVo" />
+		<typeAlias alias="PRCAVo" type="com.hw.shop.pr.ca.vo.PRCAVo" />
+		<typeAlias alias="DEMAVo" type="com.hw.shop.de.ma.vo.DEMAVo" />
+		
 	</typeAliases>
 	<mappers>
 		<mapper resource="sqlmap/BD.xml" />
 	</mappers>
 
 </configuration>
+

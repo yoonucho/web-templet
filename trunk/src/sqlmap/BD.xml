@@ -3,41 +3,53 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="BD">
-
-	<select id="BDMA010CNTQ" parameterType="string" resultType="int">
+	<!-- 게시판 수조회 -->
+	<select id="BDMA010CNTQ" parameterType="SearchVo" resultType="int">
 		select count(*) as CNT
 		from brd a
+		where 1=1
+		<if test="src_title !=null &amp;&amp; src_title !=''">
+			and brd_title like #{src_title}
+		</if>
+	</select>
 
-  </select>
+	<!-- 게시판 목록 조회 -->
+	<select id="BDMA010Q" parameterType="SearchVo" resultType="java.util.HashMap">
 
-	<select id="BDMA010Q" parameterType="java.util.HashMap"
-		resultType="java.util.HashMap">
 		select a.brd_seq_no,
 		a.brd_type,
 		a.brd_title,
 		a.brd_hit,
-		a.content,
+		<!-- a.content, -->
 		a.reg_id,
 		a.reg_nm,
-		a.reg_dt,
+		concat(substr(a.reg_dt,1,4),'-',substr(a.reg_dt,5,2),'-',substr(a.reg_dt,7,2))
+		as reg_dt,
 		a.udt_id,
 		a.udt_nm,
 		a.udt_dt
 		from
 		brd a
-	
-  </select>
+		where 1=1
+		<if test="src_title !=null &amp;&amp; src_title !=''">
+			and brd_title like #{src_title}
+		</if>
+		order by
+		brd_seq_o desc
+		limit #{firstRecordIndex}, #{lastRecordIndex}
+	</select>
 
 	<select id="BDMA030Q" parameterType="java.util.HashMap"
 		resultType="String">
-		select ifnull(max(brd_seq_no), 1) as cnt from brd
+		select ifnull(max(brd_seq_o), 0) as cnt from brd
 
   </select>
-  
-	<insert id="BDMA030T" parameterType="java.util.HashMap"
-		>
-		insert into brd(
-		brd_seq_no,brd_type,brd_title,brd_hit,content,reg_id,reg_nm,reg_dt
+
+	<!-- 게시판 등록 -->
+	<insert id="BDMA030T" parameterType="BDMAVo">
+		insert
+		into brd(
+		brd_seq_no,brd_type,brd_title,brd_hit,content,reg_id,reg_nm,reg_dt,brd_seq_o
 		)
 		values(
 		#{brd_seq_no},
@@ -47,26 +59,649 @@
 		#{content},
 		#{reg_id},
 		#{reg_nm},
-		DATE_FORMAT(now(),'%Y%m%d%H%i%S')
+		DATE_FORMAT(now(),'%Y%m%d%H%i%S'),
+		#{brd_seq_o}
 		)
 
-  </insert>
+	</insert>
 
-	<insert id="BDMA030FILET" parameterType="java.util.HashMap"
-		>
+	<!-- 게시판 파일 등록 -->
+	<insert id="BDMA030FILET" parameterType="java.util.HashMap">
+
+		<selectKey resultType="int" keyProperty="id" order="BEFORE">
+			select
+			ifnull(max(file_seq_no)+1, 1) as cnt from brd_file
+		</selectKey>
+
 		insert into brd_file(
 		brd_seq_no,file_seq_no,m_file_nm,v_file_nm,reg_dt,reg_id,reg_nm )
 		values(#{brd_seq_no},
-		#{file_seq_no},
+		#{id},
 		#{m_file_nm},
 		#{v_file_nm},
-		#{reg_dt},
+		DATE_FORMAT(now(),'%Y%m%d%H%i%S'),
 		#{reg_id},
 		#{reg_nm} )
+	</insert>
+
+	<!-- 게시판 수정 -->
+	<update id="BDMA050T" parameterType="java.util.HashMap">
+		UPDATE brd
+		SET
+		brd_title =
+		#{brd_title},
+		content = #{content},
+		udt_id = #{udt_id},
+		udt_nm =
+		#{udt_nm},
+		udt_dt = DATE_FORMAT(now(),'%Y%m%d%H%i%S')
+		WHERE brd_seq_no =
+		#{brd_seq_no}
+	</update>
+
+	<select id="BDMA051Q" parameterType="java.util.HashMap"
+		resultType="String">
+		SELECT m_file_nm FROM brd_file WHERE file_seq_no =
+		#{file_seq_no}
+	</select>
+
+	<delete id="BDMA051T" parameterType="java.util.HashMap">
+		DELETE FROM brd_file WHERE
+		file_seq_no = #{file_seq_no}
+	</delete>
+
+	<!-- 게시판 상세조회 -->
+	<select id="BDMA070Q" parameterType="BDMAVo" resultType="java.util.HashMap">
+		select
+		a.brd_seq_no,
+		a.brd_type,
+		a.brd_title,
+		a.brd_hit,
+		a.content,
+		a.depth,
+		a.reg_id,
+		a.reg_nm,
+		a.reg_dt,
+		a.udt_id,
+		a.udt_nm,
+		a.udt_dt,
+		a.brd_seq_o
+		from
+		brd a
+		where brd_seq_no = #{brd_seq_no}
+  </select>
+
+	<!-- 게시판 파일조회 -->
+	<select id="BDMA071Q" parameterType="BDMAVo" resultType="java.util.HashMap">
+		select
+		a.brd_seq_no,
+		a.file_seq_no,
+		a.m_file_nm,
+		a.v_file_nm,
+		a.reg_dt,
+		a.reg_id,
+		a.reg_nm
+		from brd_file a
+		where brd_seq_no = #{brd_seq_no}
+  </select>
+
+	<!-- 사용자조회 -->
+	<select id="USMA010Q" parameterType="USMAVo" resultType="java.util.HashMap">
+		select
+		a.usr_id,
+		a.usr_pw,
+		a.name,
+		a.ssn1,
+		a.ssn2,
+		a.zip1,
+		a.zip2,
+		a.addr1,
+		a.addr2,
+		a.tel1,
+		a.tel2,
+		a.tel3,
+		a.cell1,
+		a.cell2,
+		a.cell3,
+		a.email1,
+		a.email2,
+		a.mail_agree_yn,
+		a.area,
+		a.reg_dt,
+		a.reg_nm,
+		a.reg_id
+		from member a
+
+	</select>
+	<!-- 사용자수 조회 -->
+	<select id="USMA010CNTQ" parameterType="USMAVo" resultType="int">
+		select count(*) as CNT
+		from member a
+  </select>
+	<!-- 중복체크 -->
+	<select id="USMA020Q" parameterType="USMAVo" resultType="int">
+		select
+		count(*) as CNT
+		from member a
+		where usr_id = #{usr_id}
+  </select>
+	<!-- 등록 -->
+	<insert id="USMA020T" parameterType="USMAVo">
+		INSERT
+		INTO member
+		(
+		usr_id,
+		usr_pw,
+		name,
+		ssn1,
+		ssn2,
+		zip1,
+		zip2,
+		addr1,
+		addr2,
+		tel1,
+		tel2,
+		tel3,
+		cell1,
+		cell2,
+		cell3,
+		email1,
+		email2,
+		mail_agree_yn,
+		area,
+		reg_dt,
+		reg_nm,
+		reg_id
+		)
+		VALUES
+		(
+		#{usr_id} ,
+		#{usr_pw} ,
+		#{name} ,
+		#{ssn1} ,
+		#{ssn2} ,
+		#{zip1} ,
+		#{zip2} ,
+		#{addr1} ,
+		#{addr2} ,
+		#{tel1} ,
+		#{tel2} ,
+		#{tel3} ,
+		#{cell1} ,
+		#{cell2} ,
+		#{cell3} ,
+		#{email1} ,
+		#{email2} ,
+		#{mail_agree_yn} ,
+		#{area},
+		DATE_FORMAT(now(),'%Y%m%d%H%i%S'),
+		#{reg_nm},
+		#{reg_id}
+		)
+
+	</insert>
+
+	<select id="USMA030Q" parameterType="USMAVo" resultType="java.util.HashMap">
+		select
+		a.usr_id,
+		a.usr_pw,
+		a.name,
+		a.ssn1,
+		a.ssn2,
+		a.zip1,
+		a.zip2,
+		a.addr1,
+		a.addr2,
+		a.tel1,
+		a.tel2,
+		a.tel3,
+		a.cell1,
+		a.cell2,
+		a.cell3,
+		a.email1,
+		a.email2,
+		a.mail_agree_yn,
+		a.area,
+		a.reg_dt,
+		a.reg_nm,
+		a.reg_id,
+		a.udt_id,
+		a.udt_nm,
+		a.udt_dt
+		from member a
+		where usr_id=#{usr_id}
+	</select>
+
+	<!-- 회원정보 수정 -->
+	<update id="USMA030T" parameterType="USMAVo">
+		UPDATE member
+		SET
+		usr_pw =
+		#{usr_pw},
+		name = #{name},
+		ssn1 = #{ssn1},
+		ssn2 = #{ssn2},
+		zip1 = #{zip1},
+		zip2 = #{zip2},
+		addr1 = #{addr1},
+		addr2 = #{addr2},
+		tel1 = #{tel1},
+		tel2 =
+		#{tel2},
+		tel3 = #{tel3},
+		cell1 = #{cell1},
+		cell2 = #{cell2},
+		cell3 =
+		#{cell3},
+		email1 = #{email1},
+		email2 = #{email2},
+		mail_agree_yn =
+		#{mail_agree_yn},
+		area = #{area},
+		udt_id = #{udt_id},
+		udt_nm = #{udt_nm},
+		udt_dt = DATE_FORMAT(now(),'%Y%m%d%H%i%S')
+		WHERE usr_id=#{usr_id}
+	</update>
+
+	<!-- /////////////////////////// 상품조회 -->
+
+	<!-- 조회 -->
+	<select id="PRMA010Q" parameterType="PRMAVo" resultType="java.util.HashMap">
+		select
+		a.prd_seq_no,
+		a.cate_seq_no,
+		(select cate_nm from product_cate where
+		cate_seq_no = a.cate_seq_no) as cate_nm,
+		a.prd_nm,
+		a.prd_price,
+		a.prd_save,
+		a.prd_img,
+		a.prd_content,
+		a.reg_id,
+		a.reg_nm,
+		a.reg_dt,
+		a.udt_id,
+		a.udt_nm,
+		a.udt_dt
+		from product a
+		order by prd_seq_no desc
+	</select>
+	<!-- CNT 조회 -->
+	<select id="PRMA010CNTQ" parameterType="PRMAVo" resultType="int">
+		select count(*) as CNT
+		from product a
+  </select>
+
+	<!-- 등록 -->
+	<insert id="PRMA020T" parameterType="PRMAVo">
+		<selectKey resultType="int" keyProperty="prd_seq_no" order="BEFORE">
+			select
+			ifnull(max(prd_seq_no)+1, 1) as cnt from product
+		</selectKey>
+
+		INSERT
+		INTO product
+		(
+		prd_seq_no,
+		cate_seq_no,
+		prd_nm,
+		prd_price,
+		prd_save,
+		prd_content,
+		prd_img,
+		reg_id,
+		reg_nm,
+		reg_dt
+		)
+		VALUES
+		(
+		#{prd_seq_no},
+		#{cate_seq_no},
+		#{prd_nm},
+		#{prd_price},
+		#{prd_save},
+		#{prd_content},
+		#{prd_img},
+		#{reg_id},
+		#{reg_nm},
+		DATE_FORMAT(now(),'%Y%m%d%H%i%S')
+		)
+
+	</insert>
+	<!-- 상세조회 -->
+	<select id="PRMA030Q" parameterType="PRMAVo" resultType="java.util.HashMap">
+		select
+		a.prd_seq_no,
+		a.cate_seq_no,
+		(select cate_nm from product_cate where
+		cate_seq_no = a.cate_seq_no) as cate_nm,
+		a.prd_nm,
+		a.prd_price,
+		a.prd_save,
+		a.prd_img,
+		a.prd_content,
+		a.reg_id,
+		a.reg_nm,
+		a.reg_dt,
+		a.udt_id,
+		a.udt_nm,
+		a.udt_dt
+		from product a
+		where prd_seq_no=#{prd_seq_no}
+	</select>
+
+	<!-- 정보 수정 -->
+	<update id="PRMA030T" parameterType="PRMAVo">
+		UPDATE product
+		SET
+		cate_seq_no = #{cate_seq_no},
+		prd_nm = #{prd_nm},
+		<if test="del1 !=null &amp;&amp; del1 !=''">
+			<if test="prd_img ==null || prd_img==''">
+				prd_img = '',
+			</if>
+		</if>
+		<if test="prd_img !=null &amp;&amp; prd_img!='' ">
+			prd_img = #{prd_img},
+		</if>
+		prd_price =
+		#{prd_price},
+		prd_save = #{prd_save},
+		prd_content =
+		#{prd_content},
+		udt_id = #{udt_id},
+		udt_nm = #{udt_nm},
+		udt_dt =
+		DATE_FORMAT(now(),'%Y%m%d%H%i%S')
+		WHERE prd_seq_no=#{prd_seq_no}
+	</update>
+
+	<!--/////////////////////////////////////////////////// 상품 카테고리 관리 -->
+
+	<!-- 조회 -->
+	<select id="PRCA010Q" parameterType="PRCAVo" resultType="java.util.HashMap">
+		select
+		a.cate_seq_no,
+		a.cate_nm,
+		a.cate_depth,
+		a.use_yn,
+		a.del_yn,
+		a.reg_id,
+		a.reg_nm,
+		a.reg_dt,
+		a.udt_id,
+		a.udt_nm,
+		a.udt_dt
+		from product_cate a
+		where
+		del_yn='N'
+	</select>
+
+	<!-- 사용자 화면에 보여지는 view -->
+	<select id="PRCA011Q" parameterType="PRCAVo" resultType="CodeVo">
+		select
+		concat(a.cate_seq_no) as cd,
+		a.cate_nm as cd_nm
+		from product_cate a
+		where del_yn='N'
+		and use_yn='Y'
+	</select>
+	<!-- 총갯수 조회 -->
+	<select id="PRCA010CNTQ" parameterType="PRCAVo" resultType="int">
+		select count(*) as CNT
+		from member a
+  </select>
+
+	<!-- 등록 -->
+	<insert id="PRCA020T" parameterType="PRCAVo">
+		<selectKey resultType="int" keyProperty="cate_seq_no" order="BEFORE">
+			select
+			ifnull(max(cate_seq_no)+1, 1) as cnt from product_cate
+		</selectKey>
+
+		INSERT
+		INTO product_cate
+		(
+		cate_seq_no,
+		cate_nm,
+		cate_depth,
+		use_yn,
+		del_yn,
+		reg_id,
+		reg_nm,
+		reg_dt
+		)
+		VALUES
+		(
+		#{cate_seq_no},
+		#{cate_nm},
+		#{cate_depth},
+		#{use_yn},
+		'N',
+		#{reg_id},
+		#{reg_nm},
+		DATE_FORMAT(now(),'%Y%m%d%H%i%S')
+		)
+	</insert>
+
+	<select id="PRCA030Q" parameterType="PRCAVo" resultType="java.util.HashMap">
+		select
+		a.cate_seq_no,
+		a.cate_nm,
+		a.cate_depth,
+		a.use_yn,
+		a.del_yn,
+		a.reg_id,
+		a.reg_nm,
+		a.reg_dt,
+		a.udt_id,
+		a.udt_nm,
+		a.udt_dt
+		from product_cate a
+		where
+		a.cate_seq_no=#{cate_seq_no}
+	</select>
+
+	<!-- 회원정보 수정 -->
+	<update id="PRCA030T" parameterType="PRCAVo">
+		UPDATE product_cate
+		SET
+		cate_nm = #{cate_nm},
+		cate_depth = #{cate_depth},
+		use_yn = #{use_yn},
+		del_yn = #{del_yn},
+		udt_id = #{udt_id},
+		udt_nm = #{udt_nm},
+		udt_dt =
+		DATE_FORMAT(now(),'%Y%m%d%H%i%S')
+		WHERE cate_seq_no = #{cate_seq_no}
+
+	</update>
+
+	<!-- ///////////////////////코드관리 -->
+	<select id="COMA010Q" resultType="java.util.HashMap">
+		select a.code_seq_no,
+		a.code_p_seq_no,
+		a.code_nm,
+		a.code,
+		a.code_depth,
+		a.use_yn,
+		a.del_yn,
+		a.code_order,
+		a.reg_id,
+		a.reg_nm,
+		a.reg_dt,
+		a.udt_id,
+		a.udt_nm,
+		a.udt_dt
+		from code a
+		where code_depth=1
+		and del_yn='N'
+	</select>
+	<select id="COMA010CNTQ" parameterType="CodeVo" resultType="int">
+		select count(*) as CNT
+		from code a
+		where code_depth=1
+		and del_yn='N'
+	</select>
+
+	<select id="COMA030Q" parameterType="CodeVo" resultType="java.util.HashMap">
+		select
+		a.code_seq_no,
+		a.code_p_seq_no,
+		a.code_nm,
+		a.code,
+		a.code_depth,
+		a.use_yn,
+		a.del_yn,
+		a.code_order,
+		a.reg_id,
+		a.reg_nm,
+		a.reg_dt,
+		a.udt_id,
+		a.udt_nm,
+		a.udt_dt
+		from code a
+		where code_seq_no=#{code_seq_no}
+		and del_yn='N'
+	</select>
+	<select id="COMA031Q" parameterType="CodeVo" resultType="java.util.HashMap">
+		select
+		a.code_seq_no,
+		a.code_p_seq_no,
+		a.code_nm,
+		a.code_depth,
+		a.use_yn,
+		a.code,
+		a.del_yn,
+		a.code_order,
+		a.reg_id,
+		a.reg_nm,
+		a.reg_dt,
+		a.udt_id,
+		a.udt_nm,
+		a.udt_dt
+		from code a
+		where code_p_seq_no=#{code_seq_no}
+		and del_yn='N'
+		order by code_order
+  </select>
 
 
-  </insert>
 
+	<insert id="COMA020T" parameterType="CodeVo">
+		<selectKey resultType="string" keyProperty="code_seq_no"
+			order="BEFORE">
+			SELECT
+			concat(substr(#{code_p_seq_no},1,3),LPAD(count(*)+1,2,'0')) as
+			code_seq_no
+			FROM code
+			WHERE code_p_seq_no=#{code_p_seq_no}  
+		</selectKey>
+
+		INSERT
+		INTO code
+		(
+		code_seq_no,
+		code_p_seq_no,
+		code,
+		code_nm,
+		code_depth,
+		use_yn,
+		del_yn,
+		code_order,
+		reg_id,
+		reg_nm,
+		reg_dt
+		)
+		VALUES
+		(
+		#{code_seq_no},
+		#{code_p_seq_no},
+		#{code},
+		#{code_nm},
+		2,
+		#{use_yn},
+		'N',
+		#{code_order},
+		#{reg_id},
+		#{reg_nm},
+		DATE_FORMAT(now(),'%Y%m%d%H%i%S')
+		)
+	</insert>
+	<select id="COMA020Q" parameterType="CodeVo" resultType="int">
+		SELECT count(*)+1 as cnt FROM code WHERE code_p_seq_no = #{code_p_seq_no}
+	</select>
+
+	<update id="COMA030T" parameterType="CodeVo">
+		UPDATE code
+		SET
+		code_nm =
+		#{code_nm},
+		code_depth = 2,
+		use_yn = #{use_yn},
+		udt_id = #{udt_id},
+		udt_nm = #{udt_nm},
+		udt_dt = DATE_FORMAT(now(),'%Y%m%d%H%i%S')
+		WHERE
+		code_seq_no = #{code_seq_no}
+	</update>
+
+	<update id="COMA040T" parameterType="CodeVo">
+		UPDATE code
+		SET
+		del_yn='Y'
+		WHERE code_seq_no = #{code_seq_no}
+	</update>
+
+	<!-- //////////////////////주문관리 -->
+	<select id="DEMA010Q" parameterType="DEMAVo" resultType="java.util.HashMap">
+select a.del_seq_no,
+       a.reg_dt,
+       a.usr_id,
+       a.addr1,
+       a.zip1,
+       a.zip2,
+       a.tel1,
+       a.tel2,
+       a.tel3,
+       a.cell1,
+       a.cell2,
+       a.cell3,
+       a.del_msg,
+       a.del_pee,
+       a.del_pay,
+       a.status,
+       a.to_usr,
+       a.from_usr,
+       a.reg_id,
+       a.reg_nm,
+       a.udt_id,
+       a.udt_nm,
+       a.udt_dt,
+       a.addr2
+  from deli_req a
+ ORDER BY del_seq_no desc 
+ limit 0,10
+	</select>
+	<select id="DEMA011Q" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+SELECT a.*, 
+       b.prd_nm 
+  FROM ( SELECT * FROM deli_product WHERE del_seq_no=#{del_seq_no} ) a 
+     INNER JOIN product b 
+         ON a.prd_seq_no = b.prd_seq_no
+	</select>
+	
+	
+	<select id="DEMA010CNTQ" parameterType="DEMAVo" resultType="int">
+		select count(*) as CNT
+		FROM deli_req
+	</select>
+<!-- ////////////////로그인////////// -->
+	<select id="CMMA020Q" parameterType="USMAVo" resultType="java.util.HashMap">
+SELECT * FROM member WHERE usr_id=#{usr_id} AND usr_pw =#{usr_pw}
+	</select>
 
 
 </mapper>
