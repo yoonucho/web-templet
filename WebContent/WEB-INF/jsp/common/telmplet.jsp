@@ -10,9 +10,15 @@
 <!--[if IE]>
 <link rel="stylesheet" media="all" type="text/css" href="${pageContext.request.contextPath}/css/pro_dropline_ie.css" />
 <![endif]-->
-
-
 <%@ include file="/WEB-INF/jsp/common/include/cssNscript.jsp" %>
+<script type="text/javascript">
+$(document).ready(function(){
+	
+});
+$(window).load(function(){
+	$.tv.showLikePd("imgList");
+});
+</script>
 <decorator:head />
 
 </head>
@@ -26,6 +32,7 @@
 	<!-- start logo -->
 	<div id="logo">
 	<a href=""><img src="${pageContext.request.contextPath}/images/shared/logo.png" width="156" height="40" alt="" /></a>
+		<div id="imgList"></div>
 	</div>
 	<!-- end logo -->
 	
@@ -123,9 +130,12 @@
 		<!--[if lte IE 6]><table><tr><td><![endif]-->
 		<div class="select_sub show">
 			<ul class="sub">
-				<li><a href="#nogo">View all products</a></li>
-				<li class="sub_show"><a href="#nogo">Add product</a></li>
-				<li><a href="#nogo">Delete products</a></li>
+				<li><a href="${pageContext.request.contextPath}/bd/ma/BDMA010Q.do">게시판</a></li>
+				<li class="sub_show"><a href="${pageContext.request.contextPath}/us/ma/USMA010Q.do">사용자</a></li>
+				<li><a href="${pageContext.request.contextPath}/pr/ma/PRMA010Q.do">제품</a></li>
+				<li><a href="${pageContext.request.contextPath}/pr/ca/PRCA010Q.do">제품 카테고리</a></li>
+				<li><a href="${pageContext.request.contextPath}/co/ma/COMA010Q.do">코드관리</a></li>
+				<li><a href="${pageContext.request.contextPath}/de/ma/DEMA010Q.do">주문관리</a></li>
 			</ul>
 		</div>
 		<!--[if lte IE 6]></td></tr></table></a><![endif]-->

@@ -38,33 +38,90 @@ $(document).ready(function(){
 		
 			<!--  start table-content  -->
 			<div id="table-content">
+			
+				<!--  start message-yellow -->
+				<div id="message-yellow">
+				<table border="0" width="100%" cellpadding="0" cellspacing="0">
+				<tr>
+					<td class="yellow-left">You have a new message. <a href="">Go to Inbox.</a></td>
+					<td class="yellow-right"><a class="close-yellow"><img src="${pageContext.request.contextPath}/images/table/icon_close_yellow.gif"   alt="" /></a></td>
+				</tr>
+				</table>
+				</div>
+				<!--  end message-yellow -->
+				
+				<!--  start message-red -->
+				<div id="message-red">
+				<table border="0" width="100%" cellpadding="0" cellspacing="0">
+				<tr>
+					<td class="red-left">Error. <a href="">Please try again.</a></td>
+					<td class="red-right"><a class="close-red"><img src="${pageContext.request.contextPath}/images/table/icon_close_red.gif"   alt="" /></a></td>
+				</tr>
+				</table>
+				</div>
+				<!--  end message-red -->
+				
+				<!--  start message-blue -->
+				<div id="message-blue">
+				<table border="0" width="100%" cellpadding="0" cellspacing="0">
+				<tr>
+					<td class="blue-left">Welcome back. <a href="">View my account.</a> </td>
+					<td class="blue-right"><a class="close-blue"><img src="${pageContext.request.contextPath}/images/table/icon_close_blue.gif"   alt="" /></a></td>
+				</tr>
+				</table>
+				</div>
+				<!--  end message-blue -->
+			
+				<!--  start message-green -->
+				<div id="message-green">
+				<table border="0" width="100%" cellpadding="0" cellspacing="0">
+				<tr>
+					<td class="green-left">Product added sucessfully. <a href="">Add new one.</a></td>
+					<td class="green-right"><a class="close-green"><img src="${pageContext.request.contextPath}/images/table/icon_close_green.gif"   alt="" /></a></td>
+				</tr>
+				</table>
+				</div>
+				<!--  end message-green -->
+		
 		 
 				<!--  start product-table ..................................................................................... -->
-				<form id="mainform" action="" method="get">
-				<input type="text" name="src_title" value="${param.src_title }" />
-				<input type="submit" value="검색" /><br/>
-				페이지 번호:<input type="text" name="currentPageNo" value="${paginationInfo.currentPageNo }" />
-				총페이지 : <input type="text" name="totalRecordCount" value="${paginationInfo.totalPageCount }" />
+				<form id="mainform" action="">
 				<table border="0" width="100%" cellpadding="0" cellspacing="0" id="product-table">
 				<tr>
 					<th class="table-header-check"><a id="toggle-all" ></a> </th>
-					<th class="table-header-repeat line-left minwidth-1"><a href="">번호</a>	</th>
-					<th class="table-header-repeat line-left minwidth-1"><a href="">제목</a></th>
-					<th class="table-header-repeat line-left"><a href="">등록자</a></th>
+					<th class="table-header-repeat line-left minwidth-1"><a href="">주문자(아이디)</a></th>
+					<th class="table-header-repeat line-left"><a href="">보낸사람(받는사람)</a></th>
 					<th class="table-header-repeat line-left"><a href="">등록일</a></th>
-					<th class="table-header-repeat line-left"><a href="">조회수</a></th>
+					<th class="table-header-repeat line-left"><a href="">주소(우편번호)</a></th>
+					<th class="table-header-repeat line-left"><a href="">가격</a></th>
+					<th class="table-header-repeat line-left"><a href="">상품</a></th>
+					<th class="table-header-repeat line-left"><a href="">상태</a></th>
 				</tr>
 <c:if test="${paginationInfo.list !=null }">
 	<c:forEach var="map" items="${paginationInfo.list}" varStatus="status">
 				<tr <c:if test="${(status.count mod 2)==0 }">class="alternate-row"</c:if>>
 					<td><input  type="checkbox"/></td>
-					<td>Sabev</td>
 					<td>
-						<a href="${pageContext.request.contextPath}/bd/ma/BDMA070Q.do?brd_seq_no=${map.brd_seq_no }">${map.brd_title }</a>
+						<a href="${pageContext.request.contextPath}/de/ma/DEMA030Q.do?del_seq_no=${map.del_seq_no }">${map.reg_nm }(${map.usr_id })</a>
 					</td>
-					<td>${map.reg_nm }</td>
+					<td>${map.from_usr }(${map.to_usr })</td>
 					<td>${map.reg_dt }</td>
-					<td>${map.brd_hit }</td>
+					<td>${map.addr1 } ${map.addr2 }(${map.zip1 }-${map.zip2 })</td>
+					<td>${map.del_pay }</td>
+					<td>
+		<c:forEach var="map1" items="${map.list}" varStatus="status">
+			${map1.prd_nm }(수량 : ${map1.del_cnt })
+			<br/>
+		</c:forEach>
+					</td>
+					<td>
+						<select name="">
+							<option name="1" <c:if test="${map.status =='1' }">selected="selected"</c:if>>대기</option>
+							<option name="2" <c:if test="${map.status =='2' }">selected="selected"</c:if>>발송중</option>
+							<option name="3" <c:if test="${map.status =='3' }">selected="selected"</c:if>>취소</option>
+							<option name="4" <c:if test="${map.status =='4' }">selected="selected"</c:if>>배송완료</option>
+						</select>
+					</td>
 				</tr>
 	</c:forEach>
 </c:if>
@@ -121,7 +178,8 @@ $(document).ready(function(){
 	</tr>
 	</table>
 	<div class="clear">&nbsp;</div>
-<a href="${pageContext.request.contextPath}/bd/ma/BDMA020Q.do" >등록</a>
+<a href="${pageContext.request.contextPath}/pr/ca/PRCA020Q.do" >등록</a>
+<a href="${pageContext.request.contextPath}/pr/ca/PRCA020Q.do" >삭제</a>
 
 </body>
 </html>
