@@ -26,7 +26,7 @@ function makeData(index){
 		data1 +=$(this).attr("name")+":"+"'"+$(this).val()+"'";	
 	}
 }
-
+/*
 //서버에 저장
 function serverSave(){
 	var html="";
@@ -46,9 +46,15 @@ function serverSave(){
 	$("#frmSave").html(html);
 	$("#frmSave").submit();
 }
+*/
 
 var data1 = "";
 function saveData(myChild,target){
+	var pt = $("#"+target).parent().parent();
+	if(pt.attr("rel")=='root'){
+		$("#code_p_seq_no").val(pt.attr("id"));
+	}
+	
 	data1="";
 	$("#"+myChild+" > input").each(makeData);
 	$("#"+target + " > input").remove();
@@ -61,6 +67,7 @@ function saveData(myChild,target){
 
 function cancel(){
 	getData($("a.clicked").parent().attr("id"));
+	
 }
 
 function JSONtoString(object) {  
