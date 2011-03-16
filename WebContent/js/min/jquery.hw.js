@@ -14,7 +14,6 @@
 (function($) {
 	//함수들 실행.. 자주쓰이는 함수 정리
 	
-	
 	//함수..
 	$.fn.cut = function(len) {
 		var str = this;
@@ -48,7 +47,6 @@
 		}
 	};
 	
-	
 	$.tv = function() {
 	    $.tv.impl.install();
 	};
@@ -63,6 +61,83 @@
 	$.tv.context="/tving";
 	
 	$.tv.imageDomain="";
+	
+	//내가본 상품 시작
+	
+//상품 등록
+	$.tv.addLikePd = function(pd_id, pd_img){
+		var cookPd = $.cookie('pdList');
+		var newPd="";
+
+		if(cookPd!=null && cookPd!=""){
+			var pdList = $.cookie('pdList').split(",");
+			var html ="";
+			var saveChk = false;
+			for(var i =0; i<=pdList.length;i++){
+				
+				if(pdList[i]==pd_id){
+					saveChk = true;	
+					break;
+				}
+			}
+			if(saveChk){//기존있을때
+				newPd =pd_id;
+				for(var i =0; i<pdList.length;i++){
+					if(pdList[i]!=pd_id){
+						newPd +=","+pdList[i];
+					}
+				}
+			}else{//기존에 없을때
+				cookPd+=","+pd_id;
+				newPd = cookPd;
+			}
+
+		}else{
+			newPd = pd_id;
+		}
+		
+		
+		
+		if($('#'+pd_img).html()!=null){
+			var imgClon=$('#'+pd_img).clone();
+			
+			$("body").append("<div id='_imgShow' style=\"position: absolute;\"></div>");
+			$("#_imgShow").hide();
+			//$("#_imgShow").css("","")
+			var imgPst = $('#'+pd_img).offset();
+			$("#_imgShow").css("left",imgPst.left);
+			$("#_imgShow").css("top",imgPst.top);
+			$("#_imgShow").show();
+			
+			//alert(imgPst.left+" "+imgPst.top);
+			$(imgClon).find("img").css("width","50px");
+			$(imgClon).find("img").css("height","50px");
+			
+			$("#_imgShow").append(imgClon);
+			var aPst =$("#imgList").offset();
+			$("#_imgShow").animate({"left": aPst.left+"px","top":aPst.top+"px"}, 1500,function(){$("#_imgShow").remove();});
+		}
+		
+		$.cookie('pdList', newPd, { expires: 30, path: '/'});
+	}
+	//내가본상품 가져오기
+	$.tv.showLikePd = function(divId){
+		if($.cookie('pdList')!=null){
+			var pdList = $.cookie('pdList').split(",");
+			
+			var html ="";
+			for(var i =0; i<pdList.length;i++){
+				html+=pdList[i];
+			}
+			$("#"+divId).html(html);
+			//alert($("#"+divId).html());
+		}
+		
+		//$.cookie('pdList', pd_id, { expires: 30, path: '/'});
+	}
+
+//내가본 상품 종료
+
 	
 	//url 정보 object 리턴
 //	파라미터정보
