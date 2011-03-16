@@ -21,7 +21,7 @@ import java.util.List;
  * @version		:	1.0
  */
 public class PaginationInfo {
-	private int currentPageNo; // 현재페이지
+	private int currentPageNo=1; // 현재페이지
 	private int recordCountPerPage = 10; // 페이지당보여질 레코드갯수
 	private int pageSize = 10; // 페이지사이즈
 	private int totalRecordCount; // 총레코드갯수
