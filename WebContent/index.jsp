@@ -10,21 +10,21 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 
-	<script type="text/javascript" src="/tvingmanager/scripts/jquery-1.4.2.js"></script>
-	<script type="text/javascript" src="/tvingmanager/js/jquery.cookie.js"></script>
-	<script type="text/javascript" src="/tvingmanager/js/jquery.hotkeys.js"></script>
-	<script type="text/javascript" src="/tvingmanager/js/jquery.metadata.js"></script>
-	<script type="text/javascript" src="/tvingmanager/js/sarissa.js"></script>
-	<script type="text/javascript" src="/tvingmanager/js/hwtree.js"></script>
-	<script type="text/javascript" src="/tvingmanager/js/jquery.tree.js"></script>
-	<script type="text/javascript" src="/tvingmanager/plugins/jquery.tree.checkbox.js"></script>
-	<script type="text/javascript" src="/tvingmanager/plugins/jquery.tree.contextmenu.js"></script>
-	<script type="text/javascript" src="/tvingmanager/plugins/jquery.tree.cookie.js"></script>
-	<script type="text/javascript" src="/tvingmanager/plugins/jquery.tree.hotkeys.js"></script>
-	<script type="text/javascript" src="/tvingmanager/plugins/jquery.tree.metadata.js"></script>
-	<script type="text/javascript" src="/tvingmanager/plugins/jquery.tree.themeroller.js"></script>
-	<script type="text/javascript" src="/tvingmanager/plugins/jquery.tree.xml_flat.js"></script>
-	<script type="text/javascript" src="/tvingmanager/plugins/jquery.tree.xml_nested.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery/jquery-1.4.1.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.cookie.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.hotkeys.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.metadata.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/sarissa.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/hwtree.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.tree.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/plugins/jquery.tree.checkbox.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/plugins/jquery.tree.contextmenu.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/plugins/jquery.tree.cookie.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/plugins/jquery.tree.hotkeys.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/plugins/jquery.tree.metadata.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/plugins/jquery.tree.themeroller.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/plugins/jquery.tree.xml_flat.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/plugins/jquery.tree.xml_nested.js"></script>
 
 	<style type="text/css">
 	html, body { margin:0; padding:0; }
@@ -77,6 +77,37 @@ if('${param.msgCode}'!=''){
 				plugins : { 
 					contextmenu : { }
 				},
+				rules : {
+					// only nodes of type root can be top level nodes
+					valid_children : [ "root" ]
+				},
+				types : {
+					// all node types inherit the "default" node type
+					"default" : {
+						deletable : false,
+						renameable : false
+					},
+					"root" : {
+						draggable : false,
+						valid_children : [ "folder" ],
+						icon : { 
+							image : "drive.png"
+						}
+					},
+					"folder" : {
+						valid_children : [ "file" ],
+						max_children : 3
+					},
+					"file" : {
+						// the following three rules basically do the same
+						valid_children : "none",
+						max_children : 0,
+						max_depth :0,
+						icon : { 
+							image : "file.png"
+						}
+					}
+				},
 				callback:{
 					onselect : function(NODE,TREE_OBJ){	getData($(NODE).attr("id"));return false;}
 				}
@@ -85,14 +116,14 @@ if('${param.msgCode}'!=''){
 		</script>
 		<div class="demo" id="demo_1">
 			<ul>
-				<li id="phtml_1" class="open"><input name="value" type="hidden" value="{sId:'124',sNum:'',sNm:'ㅁㄴㅇㄹ',sState:'',sMenuNm:'124',sTitle:'',url:'ㅁㄴㅇ124',ssUrl:'',type:'ㄴㅇㄹ',eventNm:'',param:'124',desc:''}"/><a href="#"><ins>&nbsp;</ins>Root node 1</a>
+				<li id="phtml_1" rel="root" class="open"><input name="value" type="hidden" value="{sId:'124',sNum:'',sNm:'ㅁㄴㅇㄹ',sState:'',sMenuNm:'124',sTitle:'',url:'ㅁㄴㅇ124',ssUrl:'',type:'ㄴㅇㄹ',eventNm:'',param:'124',desc:''}"/><a href="#"><ins>&nbsp;</ins>Root node 1</a>
 					<ul>
-						<li id="phtml_2"><a href="#"><ins>&nbsp;</ins>Child node 1</a><input name="value" type="hidden" value="{sId:'124',sNum:'',sNm:'ㅁㄴㅇㄹ',sState:'',sMenuNm:'124',sTitle:'',url:'ㅁㄴㅇ124',ssUrl:'',type:'ㄴㅇㄹ',eventNm:'',param:'124',desc:''}"/></li>
-						<li id="phtml_3"><a href="#"><ins>&nbsp;</ins>Child node 2</a><input name="value" type="hidden" value="{sId:'124',sNum:'',sNm:'ㅁㄴㅇㄹ',sState:'',sMenuNm:'124',sTitle:'',url:'ㅁㄴㅇ124',ssUrl:'',type:'ㄴㅇㄹ',eventNm:'',param:'124',desc:''}"/></li>
-						<li id="phtml_4"><a href="#"><ins>&nbsp;</ins>Some other child node with longer text</a><input name="value" type="hidden" value="{sId:'124',sNum:'',sNm:'ㅁㄴㅇㄹ',sState:'',sMenuNm:'124',sTitle:'',url:'ㅁㄴㅇ124',ssUrl:'',type:'ㄴㅇㄹ',eventNm:'',param:'124',desc:''}"/></li>
+						<li id="phtml_2" rel="folder"><a href="#"><ins>&nbsp;</ins>Child node 1</a><input name="value" type="hidden" value="{sId:'124',sNum:'',sNm:'ㅁㄴㅇㄹ',sState:'',sMenuNm:'124',sTitle:'',url:'ㅁㄴㅇ124',ssUrl:'',type:'ㄴㅇㄹ',eventNm:'',param:'124',desc:''}"/></li>
+						<li id="phtml_3" rel="folder"><a href="#"><ins>&nbsp;</ins>Child node 2</a><input name="value" type="hidden" value="{sId:'124',sNum:'',sNm:'ㅁㄴㅇㄹ',sState:'',sMenuNm:'124',sTitle:'',url:'ㅁㄴㅇ124',ssUrl:'',type:'ㄴㅇㄹ',eventNm:'',param:'124',desc:''}"/></li>
+						<li id="phtml_4" rel="folder"><a href="#"><ins>&nbsp;</ins>Some other child node with longer text</a><input name="value" type="hidden" value="{sId:'124',sNum:'',sNm:'ㅁㄴㅇㄹ',sState:'',sMenuNm:'124',sTitle:'',url:'ㅁㄴㅇ124',ssUrl:'',type:'ㄴㅇㄹ',eventNm:'',param:'124',desc:''}"/></li>
 					</ul>
 				</li>
-				<li id="phtml_5"><a href="#"><ins>&nbsp;</ins>Root node 2</a><input name="value" type="hidden" value="{sId:'124',sNum:'',sNm:'ㅁㄴㅇㄹ',sState:'',sMenuNm:'124',sTitle:'',url:'ㅁㄴㅇ124',ssUrl:'',type:'ㄴㅇㄹ',eventNm:'',param:'124',desc:''}"/></li>
+				<li id="phtml_5" rel="root"><a href="#"><ins>&nbsp;</ins>Root node 2</a><input name="value" type="hidden" value="{sId:'124',sNum:'',sNm:'ㅁㄴㅇㄹ',sState:'',sMenuNm:'124',sTitle:'',url:'ㅁㄴㅇ124',ssUrl:'',type:'ㄴㅇㄹ',eventNm:'',param:'124',desc:''}"/></li>
 			</ul>
 		</div>
 	
