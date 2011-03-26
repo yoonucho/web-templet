@@ -16,87 +16,34 @@ $(document).ready(function(){
 
 <body>
 
-	<!--  start page-heading -->
-	<div id="page-heading">
-		<h1>Add product</h1>
-	</div>
-	<!-- end page-heading -->
 
-	<table border="0" width="100%" cellpadding="0" cellspacing="0" id="content-table">
-	<tr>
-		<th rowspan="3" class="sized"><img src="${pageContext.request.contextPath}/images/shared/side_shadowleft.jpg" width="20" height="300" alt="" /></th>
-		<th class="topleft"></th>
-		<td id="tbl-border-top">&nbsp;</td>
-		<th class="topright"></th>
-		<th rowspan="3" class="sized"><img src="${pageContext.request.contextPath}/images/shared/side_shadowright.jpg" width="20" height="300" alt="" /></th>
-	</tr>
-	<tr>
-		<td id="tbl-border-left"></td>
-		<td>
-		<!--  start content-table-inner ...................................................................... START -->
-		<div id="content-table-inner">
-		
-			<!--  start table-content  -->
-			<div id="table-content">
-			
-				<!--  start message-yellow -->
-				<div id="message-yellow">
-				<table border="0" width="100%" cellpadding="0" cellspacing="0">
+                <div id="box">
+                	<h3>주문 목록</h3>
+                	
+		<form id="mainform" action="" method="get">
+		<table>
+			<tr>
+				<td>검색조건 : <input name="src_title" value="${param.src_title }" type="text" /> <input
+					id="button1" type="submit" value="Send" />
+				</td>
+			</tr>
+		</table>
+
+		<table width="100%">
+			<thead>
 				<tr>
-					<td class="yellow-left">You have a new message. <a href="">Go to Inbox.</a></td>
-					<td class="yellow-right"><a class="close-yellow"><img src="${pageContext.request.contextPath}/images/table/icon_close_yellow.gif"   alt="" /></a></td>
+					<th width="40px"><a href="#">번호</a></th>
+					<th width="100px"><a href="#">주문자(아이디)</a></th>
+					<th><a href="#">보낸사람(받는사람)</a></th>
+					<th><a href="#">등록일</a></th>
+					<th><a href="#">주소(우편번호)</a></th>
+					<th><a href="#">가격</a></th>
+					<th><a href="#">상품</a></th>
+					<th><a href="#">상태</a></th>
 				</tr>
-				</table>
-				</div>
-				<!--  end message-yellow -->
-				
-				<!--  start message-red -->
-				<div id="message-red">
-				<table border="0" width="100%" cellpadding="0" cellspacing="0">
-				<tr>
-					<td class="red-left">Error. <a href="">Please try again.</a></td>
-					<td class="red-right"><a class="close-red"><img src="${pageContext.request.contextPath}/images/table/icon_close_red.gif"   alt="" /></a></td>
-				</tr>
-				</table>
-				</div>
-				<!--  end message-red -->
-				
-				<!--  start message-blue -->
-				<div id="message-blue">
-				<table border="0" width="100%" cellpadding="0" cellspacing="0">
-				<tr>
-					<td class="blue-left">Welcome back. <a href="">View my account.</a> </td>
-					<td class="blue-right"><a class="close-blue"><img src="${pageContext.request.contextPath}/images/table/icon_close_blue.gif"   alt="" /></a></td>
-				</tr>
-				</table>
-				</div>
-				<!--  end message-blue -->
-			
-				<!--  start message-green -->
-				<div id="message-green">
-				<table border="0" width="100%" cellpadding="0" cellspacing="0">
-				<tr>
-					<td class="green-left">Product added sucessfully. <a href="">Add new one.</a></td>
-					<td class="green-right"><a class="close-green"><img src="${pageContext.request.contextPath}/images/table/icon_close_green.gif"   alt="" /></a></td>
-				</tr>
-				</table>
-				</div>
-				<!--  end message-green -->
-		
-		 
-				<!--  start product-table ..................................................................................... -->
-				<form id="mainform" action="">
-				<table border="0" width="100%" cellpadding="0" cellspacing="0" id="product-table">
-				<tr>
-					<th class="table-header-check"><a id="toggle-all" ></a> </th>
-					<th class="table-header-repeat line-left minwidth-1"><a href="">주문자(아이디)</a></th>
-					<th class="table-header-repeat line-left"><a href="">보낸사람(받는사람)</a></th>
-					<th class="table-header-repeat line-left"><a href="">등록일</a></th>
-					<th class="table-header-repeat line-left"><a href="">주소(우편번호)</a></th>
-					<th class="table-header-repeat line-left"><a href="">가격</a></th>
-					<th class="table-header-repeat line-left"><a href="">상품</a></th>
-					<th class="table-header-repeat line-left"><a href="">상태</a></th>
-				</tr>
+			</thead>
+			<tbody>
+
 <c:if test="${paginationInfo.list !=null }">
 	<c:forEach var="map" items="${paginationInfo.list}" varStatus="status">
 				<tr <c:if test="${(status.count mod 2)==0 }">class="alternate-row"</c:if>>
@@ -125,60 +72,29 @@ $(document).ready(function(){
 				</tr>
 	</c:forEach>
 </c:if>
-				</table>
-				<!--  end product-table................................... --> 
-				</form>
-			</div>
-			<!--  end content-table  -->
-		
-			<!--  start actions-box ............................................... -->
-			<div id="actions-box">
-				<a href="" class="action-slider"></a>
-				<div id="actions-box-slider">
-					<a href="" class="action-edit">Edit</a>
-					<a href="" class="action-delete">Delete</a>
-				</div>
-				<div class="clear"></div>
-			</div>
-			<!-- end actions-box........... -->
-			
-			<!--  start paging..................................................... -->
-			<table border="0" cellpadding="0" cellspacing="0" id="paging-table">
-			<tr>
-			<td>
-				<a href="" class="page-far-left"></a>
-				<a href="" class="page-left"></a>
-				<div id="page-info">Page <strong>1</strong> / 15</div>
-				<a href="" class="page-right"></a>
-				<a href="" class="page-far-right"></a>
-			</td>
-			<td>
-			<select  class="styledselect_pages">
-				<option value="">Number of rows</option>
-				<option value="">1</option>
-				<option value="">2</option>
-				<option value="">3</option>
-			</select>
-			</td>
-			</tr>
-			</table>
-			<!--  end paging................ -->
-			
-			<div class="clear"></div>
-		 
-		</div>
-		<!--  end content-table-inner ............................................END  -->
-		</td>
-		<td id="tbl-border-right"></td>
-	</tr>
-	<tr>
-		<th class="sized bottomleft"></th>
-		<td id="tbl-border-bottom">&nbsp;</td>
-		<th class="sized bottomright"></th>
-	</tr>
-	</table>
-	<div class="clear">&nbsp;</div>
-<a href="${pageContext.request.contextPath}/pr/ca/PRCA020Q.do" >등록</a>
+<c:if test="${fn:length(paginationInfo.list)==0 }">
+				<tr>
+					<td class="a-center" colspan="7">데이터가 없습니다</td>
+				</tr>
+</c:if>
+			</tbody>
+		</table>
+		<div id="pager">
+              	Page <a href="#"><img src="${pageContext.request.contextPath}/img/icons/arrow_left.gif" width="16" height="16" /></a> 
+           	<input size="1" value="${paginationInfo.currentPageNo }" type="text" name="currentPageNo" id="page" /> 
+           	<a href="#"><img src="${pageContext.request.contextPath}/img/icons/arrow_right.gif" width="16" height="16" /></a>of ${paginationInfo.totalPageCount }
+              pages | View <select name="view">
+              				<option>10</option>
+                              <option>20</option>
+                              <option>50</option>
+                              <option>100</option>
+              			</select> 
+              per page | Total <strong>${paginationInfo.totalRecordCount }</strong> records found
+              </div>
+              </form>
+              
+          </div>
+
 <a href="${pageContext.request.contextPath}/pr/ca/PRCA020Q.do" >삭제</a>
 
 </body>
