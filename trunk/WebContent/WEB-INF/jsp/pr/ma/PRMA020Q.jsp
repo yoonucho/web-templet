@@ -16,32 +16,24 @@ $(document).ready(function(){
 
 <body>
 
-<div id="page-heading"><h1>Add product</h1></div>
 
-
-<table border="0" width="100%" cellpadding="0" cellspacing="0" id="content-table">
-<tr>
-	<th rowspan="3" class="sized"><img src="${pageContext.request.contextPath}/images/shared/side_shadowleft.jpg" width="20" height="300" alt="" /></th>
-	<th class="topleft"></th>
-	<td id="tbl-border-top">&nbsp;</td>
-	<th class="topright"></th>
-	<th rowspan="3" class="sized"><img src="${pageContext.request.contextPath}/images/shared/side_shadowright.jpg" width="20" height="300" alt="" /></th>
-</tr>
-<tr>
-	<td id="tbl-border-left"></td>
-	<td>
-	<!--  start content-table-inner -->
-	<div id="content-table-inner">
-	
-	<c:set var="ac" value="${pageContext.request.contextPath}/pr/ma/PRMA020T.do"/>
-	<c:if test="${!empty frmSave.prd_seq_no && frmSave.prd_seq_no !=0 }">
-		<c:set var="ac" value="${pageContext.request.contextPath}/pr/ma/PRMA030T.do"/>	
-	</c:if>
-
-	${ac }
-	<form:form action="${ac }" commandName="frmSave" id="frmSave" name="frmSave" method="post" enctype="multipart/form-data">
-	<form:hidden path="prd_seq_no"/>
-	<form:errors/>
+	<div id="box">
+		<h3 id="adduser">제품
+			<c:choose>
+				<c:when test="${!empty frmSave.prd_seq_no && frmSave.prd_seq_no !=0 }">수정</c:when>
+				<c:otherwise>등록</c:otherwise>
+			</c:choose>
+		</h3>
+		
+		<c:set var="ac" value="${pageContext.request.contextPath}/pr/ma/PRMA020T.do"/>
+		<c:if test="${!empty frmSave.prd_seq_no && frmSave.prd_seq_no !=0 }">
+			<c:set var="ac" value="${pageContext.request.contextPath}/pr/ma/PRMA030T.do"/>	
+		</c:if>	
+		
+		<form:form action="${ac }" commandName="frmSave" id="frmSave" name="frmSave" method="post" enctype="multipart/form-data" cssClass="form">
+		<form:errors/>
+		<form:hidden path="prd_seq_no"/>
+		
 		<table>
 			<tr>
 				<td width="127" align=center class="txt_pro" nowrap bgcolor="#FFFFFF">제품 카테고리</td>
@@ -87,38 +79,23 @@ $(document).ready(function(){
 					<form:hidden path="file_name1" value="${frmSave.prd_img }"/>
 					<br/>
 					</c:if>
-					<input type="file" name="file1"/>
-					
+					<input type="file" name="file1" class="file_1"/>
 				</td>
 			</tr>
-
-			<tr>
-				<th>&nbsp;</th>
-				<td valign="top"><input type="button" value=""
-					onclick="frmSave.submit();" class="form-submit" /> <input
-					type="reset" value="" class="form-reset" /></td>
-				<td></td>
-			</tr>
 		</table>
-	</form:form>
-					<div class="clear"></div>
- 
-
-</div>
-<!--  end content-table-inner  -->
-</td>
-<td id="tbl-border-right"></td>
-</tr>
-<tr>
-	<th class="sized bottomleft"></th>
-	<td id="tbl-border-bottom">&nbsp;</td>
-	<th class="sized bottomright"></th>
-</tr>
-</table>
-
-<div class="clear">&nbsp;</div>
-
-</div>
+		<div align="center">
+			<c:choose>
+				<c:when test="${!empty frmSave.prd_seq_no && frmSave.prd_seq_no !=0 }">
+				<input id="button1" type="submit" value="수정" />
+				</c:when>
+				<c:otherwise>
+				<input id="button1" type="submit" value="등록" />
+				</c:otherwise>
+			</c:choose>
+			
+		</div>
+		</form:form>
+	</div>
 
 </body>
 </html>

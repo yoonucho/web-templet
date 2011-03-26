@@ -16,111 +16,79 @@ $(document).ready(function(){
 
 <body>
 
-	<!--  start page-heading -->
-	<div id="page-heading">
-		<h1>Add product</h1>
-	</div>
-	<!-- end page-heading -->
+                <div id="box">
+                	<h3>게시글 목록</h3>
+                	
+		<form id="mainform" action="" method="get">
+		<table>
+			<tr>
+				<td>검색조건 : <input name="src_title" value="${param.src_title }" type="text" /> <input
+					id="button1" type="submit" value="Send" />
+				</td>
+			</tr>
+		</table>
 
-	<table border="0" width="100%" cellpadding="0" cellspacing="0" id="content-table">
-	<tr>
-		<th rowspan="3" class="sized"><img src="${pageContext.request.contextPath}/images/shared/side_shadowleft.jpg" width="20" height="300" alt="" /></th>
-		<th class="topleft"></th>
-		<td id="tbl-border-top">&nbsp;</td>
-		<th class="topright"></th>
-		<th rowspan="3" class="sized"><img src="${pageContext.request.contextPath}/images/shared/side_shadowright.jpg" width="20" height="300" alt="" /></th>
-	</tr>
-	<tr>
-		<td id="tbl-border-left"></td>
-		<td>
-		<!--  start content-table-inner ...................................................................... START -->
-		<div id="content-table-inner">
-		
-			<!--  start table-content  -->
-			<div id="table-content">
-		 
-				<!--  start product-table ..................................................................................... -->
-				<form id="mainform" action="" method="get">
-				<input type="text" name="src_title" value="${param.src_title }" />
-				<input type="submit" value="검색" /><br/>
-				페이지 번호:<input type="text" name="currentPageNo" value="${paginationInfo.currentPageNo }" />
-				총페이지 : <input type="text" name="totalRecordCount" value="${paginationInfo.totalPageCount }" />
-				<table border="0" width="100%" cellpadding="0" cellspacing="0" id="product-table">
+		<table width="100%">
+			<thead>
 				<tr>
-					<th class="table-header-check"><a id="toggle-all" ></a> </th>
-					<th class="table-header-repeat line-left minwidth-1"><a href="">번호</a>	</th>
-					<th class="table-header-repeat line-left minwidth-1"><a href="">제목</a></th>
-					<th class="table-header-repeat line-left"><a href="">등록자</a></th>
-					<th class="table-header-repeat line-left"><a href="">등록일</a></th>
-					<th class="table-header-repeat line-left"><a href="">조회수</a></th>
+					<th width="40px"><a href="#">ID<img
+							src="${pageContext.request.contextPath}/img/icons/arrow_down_mini.gif"
+							width="16" height="16" align="absmiddle" />
+					</a>
+					</th>
+					<th><a href="#">Full Name</a>
+					</th>
+					<th><a href="#">Email</a>
+					</th>
+					<th width="70px"><a href="#">Group</a>
+					</th>
+					<th width="50px"><a href="#">ZIP</a>
+					</th>
+					<th width="90px"><a href="#">Registered</a>
+					</th>
+					<th width="60px"><a href="#">Action</a>
+					</th>
 				</tr>
+			</thead>
+			<tbody>
+
 <c:if test="${paginationInfo.list !=null }">
 	<c:forEach var="map" items="${paginationInfo.list}" varStatus="status">
-				<tr <c:if test="${(status.count mod 2)==0 }">class="alternate-row"</c:if>>
-					<td><input  type="checkbox"/></td>
-					<td>Sabev</td>
-					<td>
-						<a href="${pageContext.request.contextPath}/bd/ma/BDMA070Q.do?brd_seq_no=${map.brd_seq_no }">${map.brd_title }</a>
-					</td>
+				<tr>
+					<td class="a-center">232</td>
+					<td><a href="${pageContext.request.contextPath}/bd/ma/BDMA070Q.do?brd_seq_no=${map.brd_seq_no }">${map.brd_title }</a></td>
 					<td>${map.reg_nm }</td>
 					<td>${map.reg_dt }</td>
 					<td>${map.brd_hit }</td>
+					<td>July 2, 2008</td>
+					<td><a href="#"><img src="${pageContext.request.contextPath}/img/icons/user.png" title="Show profile" width="16" height="16" /></a><a href="#"><img src="${pageContext.request.contextPath}/img/icons/user_edit.png" title="Edit user" width="16" height="16" /></a><a href="#"><img src="${pageContext.request.contextPath}/img/icons/user_delete.png" title="Delete user" width="16" height="16" /></a></td>
 				</tr>
 	</c:forEach>
 </c:if>
-				</table>
-				<!--  end product-table................................... --> 
-				</form>
-			</div>
-			<!--  end content-table  -->
-		
-			<!--  start actions-box ............................................... -->
-			<div id="actions-box">
-				<a href="" class="action-slider"></a>
-				<div id="actions-box-slider">
-					<a href="" class="action-edit">Edit</a>
-					<a href="" class="action-delete">Delete</a>
-				</div>
-				<div class="clear"></div>
-			</div>
-			<!-- end actions-box........... -->
-			
-			<!--  start paging..................................................... -->
-			<table border="0" cellpadding="0" cellspacing="0" id="paging-table">
-			<tr>
-			<td>
-				<a href="" class="page-far-left"></a>
-				<a href="" class="page-left"></a>
-				<div id="page-info">Page <strong>1</strong> / 15</div>
-				<a href="" class="page-right"></a>
-				<a href="" class="page-far-right"></a>
-			</td>
-			<td>
-			<select  class="styledselect_pages">
-				<option value="">Number of rows</option>
-				<option value="">1</option>
-				<option value="">2</option>
-				<option value="">3</option>
-			</select>
-			</td>
-			</tr>
-			</table>
-			<!--  end paging................ -->
-			
-			<div class="clear"></div>
-		 
-		</div>
-		<!--  end content-table-inner ............................................END  -->
-		</td>
-		<td id="tbl-border-right"></td>
-	</tr>
-	<tr>
-		<th class="sized bottomleft"></th>
-		<td id="tbl-border-bottom">&nbsp;</td>
-		<th class="sized bottomright"></th>
-	</tr>
-	</table>
-	<div class="clear">&nbsp;</div>
+<c:if test="${fn:length(paginationInfo.list)==0 }">
+				<tr>
+					<td class="a-center" colspan="7">데이터가 없습니다</td>
+				</tr>
+</c:if>
+			</tbody>
+		</table>
+		<div id="pager">
+              	Page <a href="#"><img src="${pageContext.request.contextPath}/img/icons/arrow_left.gif" width="16" height="16" /></a> 
+           	<input size="1" value="${paginationInfo.currentPageNo }" type="text" name="currentPageNo" id="page" /> 
+           	<a href="#"><img src="${pageContext.request.contextPath}/img/icons/arrow_right.gif" width="16" height="16" /></a>of ${paginationInfo.totalPageCount }
+              pages | View <select name="view">
+              				<option>10</option>
+                              <option>20</option>
+                              <option>50</option>
+                              <option>100</option>
+              			</select> 
+              per page | Total <strong>${paginationInfo.totalRecordCount }</strong> records found
+              </div>
+              </form>
+              
+          </div>
+
+
 <a href="${pageContext.request.contextPath}/bd/ma/BDMA020Q.do" >등록</a>
 
 </body>
