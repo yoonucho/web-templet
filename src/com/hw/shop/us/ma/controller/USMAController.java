@@ -21,7 +21,7 @@ public class USMAController {
 	@Autowired
 	private USMAService service;
 
-	Logger log = Logger.getLogger(USMAController.class);
+	Logger log = Logger.getLogger(getClass());
 	
 	/**
 	 * 목록

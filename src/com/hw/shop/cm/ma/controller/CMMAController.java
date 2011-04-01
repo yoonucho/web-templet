@@ -22,7 +22,7 @@ public class CMMAController {
 	@Autowired
 	private CMMAService service;
 
-	Logger log = Logger.getLogger(CMMAController.class);
+	Logger log = Logger.getLogger(getClass());
 	
 	/**
 	 * 로그인창
