@@ -24,7 +24,7 @@ public class COMAController {
 	@Autowired
 	private COMAService service;
 
-	Logger log = Logger.getLogger(COMAController.class);
+	Logger log = Logger.getLogger(getClass());
 	
 
 	/**

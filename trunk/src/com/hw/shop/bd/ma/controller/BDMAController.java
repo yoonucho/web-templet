@@ -30,8 +30,8 @@ public class BDMAController {
 	private final String FILE_PATH= "/bd/ma";
 	@Autowired
 	private BDMAService service;
-
-	Logger log = Logger.getLogger(BDMAController.class);
+	
+	Logger log = Logger.getLogger(getClass());
 	/**
 	 * 목록
 	 * @param vo
