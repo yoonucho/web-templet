@@ -32,6 +32,13 @@ public class BDMAController {
 	private BDMAService service;
 	
 	Logger log = Logger.getLogger(getClass());
+	
+//	@RequestMapping
+//	public ModelAndView t() {
+//		ModelAndView mav = new ModelAndView();
+//				
+//		return mav; 
+//	}
 	/**
 	 * 목록
 	 * @param vo
