@@ -1,7 +1,12 @@
 package com.hw.shop.util;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 
 
@@ -30,19 +35,80 @@ public class PaginationInfo {
 	private int lastPageNoOnPageList;// 마지막페이지번호
 	private int firstRecordIndex; // 첫레코드번호
 	private int lastRecordIndex; // 마지막레코드번호
+	private String prameter="";//전달되는 파라미터
+	private Map paramMap;	//파라미터맵
 	private List list = new ArrayList();
 
+	public PaginationInfo(){
+		
+	}
+//	public PaginationInfo(Map map){
+//		PaginationInfo(map);
+//	}
+	public PaginationInfo(PaginationInfo pinfo) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException{
+		SMCommonUtil util = new SMCommonUtil();
+		Map p = new HashMap();
+		util.beanToMap(pinfo, p);
+		PaginationInfo(p);
+	}
+	
+	//초기화 셋팅 map을 변수에 할당한다.
+	private void PaginationInfo(Map map) {
+		int currnetPageNo = 1;
+		if(map.get("currentPageNo")!=null && !"0".equals(map.get("currentPageNo"))){
+			currnetPageNo = (Integer)map.get("currentPageNo"); 
+		}
+		setCurrentPageNo(currnetPageNo);
+		
+		setParamMap(map);
+	}
 	
 	
+	public Map getParamMap() {
+		return paramMap;
+	}
+	public void setParamMap(Map paramMap) {
+		this.paramMap = paramMap;
+	}
+	public String getPrameter() {
+		if(paramMap==null){
+			return "";
+		}
+		paramMap.remove("currentPageNo");
+		paramMap.remove("recordCountPerPage");
+		paramMap.remove("totalRecordCount");
+		paramMap.remove("totalPageCount");
+		paramMap.remove("firstPageNoOnPageList");
+		paramMap.remove("lastPageNoOnPageList");
+		paramMap.remove("firstRecordIndex");
+		paramMap.remove("lastRecordIndex");
+		paramMap.remove("prameter");
+		paramMap.remove("paramMap");
+		paramMap.remove("list");
+		
+		Set paramKeySet = paramMap.keySet();
+		Iterator paramIt = paramKeySet.iterator();
+		StringBuffer getParamBuf = new StringBuffer();
+		String getParam = "";
+		int paramSize = 0;
+		while(paramIt.hasNext()){
+			String key = (String)paramIt.next();
+			getParamBuf.append("&"+key+"="+paramMap.get(key));
+			paramSize++;
+		}
+		return getParamBuf.toString();
+	}
+
+	public void setPrameter(String prameter) {
+		this.prameter = prameter;
+	}
+
 	public List getList() {
 		return list;
 	}
 
 	public void setList(List list) {
 		this.list = list;
-	}
-
-	public PaginationInfo() {
 	}
 
 	public int getRecordCountPerPage() {
