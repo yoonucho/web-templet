@@ -307,7 +307,7 @@
 	<!-- /////////////////////////// 상품조회 -->
 
 	<!-- 조회 -->
-	<select id="PRMA010Q" parameterType="PRMAVo" resultType="java.util.HashMap">
+	<select id="PRMA010Q" parameterType="java.util.Map" resultType="java.util.HashMap">
 		select
 		a.prd_seq_no,
 		a.cate_seq_no,
@@ -325,6 +325,10 @@
 		a.udt_nm,
 		a.udt_dt
 		from product a
+		where 1=1
+		<if test="src_title !=null &amp;&amp; src_title !=''">
+			and prd_nm like #{src_title}
+		</if>
 		order by prd_seq_no desc
 	</select>
 	<!-- CNT 조회 -->
@@ -416,6 +420,71 @@
 		DATE_FORMAT(now(),'%Y%m%d%H%i%S')
 		WHERE prd_seq_no=#{prd_seq_no}
 	</update>
+
+<!--	댓글가져오기-->
+	<select id="PRMA050Q" parameterType="PRMACMMTVo" resultType="java.util.HashMap">
+SELECT prd_seq_no,
+       seq_no    ,
+       content   ,
+       reg_dt    ,
+       reg_nm    ,
+       reg_id    ,
+       udt_id    ,
+       udt_nm    ,
+       udt_dt
+FROM   product_cmmt
+where prd_seq_no = #{prd_seq_no}
+ORDER BY prd_seq_no, seq_no DESC
+limit #{firstRecordIndex}, #{lastRecordIndex}
+	</select>
+<!--	댓글수조회-->
+	<select id="PRMA051Q" parameterType="PRMACMMTVo" resultType="int">
+SELECT count(*) as CNT
+FROM   product_cmmt
+where prd_seq_no = #{prd_seq_no}
+	</select>
+<!--	댓글등록-->
+	<insert id="PRMA050T" parameterType="PRMACMMTVo">
+		<selectKey resultType="int" keyProperty="seq_no" order="BEFORE">
+			select
+			ifnull(max(seq_no)+1, 1) as cnt from product_cmmt
+		</selectKey>
+INSERT
+INTO   product_cmmt
+       (
+              prd_seq_no,
+              seq_no    ,
+              content   ,
+              reg_dt    ,
+              reg_nm    ,
+              reg_id    
+       )
+       VALUES
+       (
+              #{prd_seq_no},
+              #{seq_no}    ,
+              #{content}   ,
+              DATE_FORMAT(now(),'%Y%m%d%H%i%S')    ,
+              #{reg_nm}    ,
+              #{reg_id}   
+       );
+	</insert>
+<!--	상품평삭제-->
+	<delete id="PRMA051T" parameterType="java.util.HashMap">
+		DELETE FROM product_cmmt WHERE seq_no= #{seq_no}
+	</delete>
+	
+	<update id="PRMA052T" parameterType="PRCAVo">
+UPDATE product_cmmt 
+	SET
+	content = #{content} ,
+	udt_id = #{udt_id} ,
+	udt_nm = #{udt_nm} ,
+	udt_dt = DATE_FORMAT(now(),'%Y%m%d%H%i%S')
+WHERE seq_no = #{seq_no} ;
+
+	</update>
+	
 
 	<!--/////////////////////////////////////////////////// 상품 카테고리 관리 -->
 
@@ -656,6 +725,8 @@
 	</update>
 
 	<!-- //////////////////////주문관리 -->
+	
+<!--	주문정보-->
 	<select id="DEMA010Q" parameterType="DEMAVo" resultType="java.util.HashMap">
 select a.del_seq_no,
        a.reg_dt,
@@ -685,6 +756,7 @@ select a.del_seq_no,
  ORDER BY del_seq_no desc 
  limit 0,10
 	</select>
+<!--	배송제품 수량 및 배송상품 조회-->
 	<select id="DEMA011Q" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 SELECT a.*, 
        b.prd_nm 
@@ -693,7 +765,7 @@ SELECT a.*,
          ON a.prd_seq_no = b.prd_seq_no
 	</select>
 	
-	
+<!--	전체배송정보-->
 	<select id="DEMA010CNTQ" parameterType="DEMAVo" resultType="int">
 		select count(*) as CNT
 		FROM deli_req
