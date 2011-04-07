@@ -22,18 +22,18 @@ public class ShopInterceptor extends HandlerInterceptorAdapter {
 	 * (javax.servlet.http.HttpServletRequest,
 	 * javax.servlet.http.HttpServletResponse, java.lang.Object)
 	 */
-	public boolean preHandle(HttpServletRequest request,
-			HttpServletResponse response, Object handler) throws Exception {
+	public boolean preHandle(HttpServletRequest req,
+			HttpServletResponse res, Object handler) throws Exception {
 
 		// Cache 설정
 //		response.setHeader("Pragma", "no-cache");
 //		response.setHeader("Cache-Control", "no-store,must-revalidate");
 //		response.setDateHeader("Expires", 0);
 //		
-		// 파란 로그인만 확인
-		request.setAttribute("_uri", request.getRequestURI()); // 로그인 유무 (true/false)
+		req.setAttribute("_uri", req.getRequestURI()); // 로그인 유무 (true/false)
+		
 
-		return super.preHandle(request, response, handler);
+		return super.preHandle(req, res, handler);
 	}
 
 	/*

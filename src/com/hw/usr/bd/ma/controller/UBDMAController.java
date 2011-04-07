@@ -33,12 +33,6 @@ public class UBDMAController {
 	 */
 	@RequestMapping
 	public ModelAndView BDMA010Q(SearchVo vo) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-
-		if(log.isDebugEnabled()){
-			log.debug(vo);
-			log.debug("asfasf");			
-		}
-
 		ModelAndView mav = new ModelAndView();
 		PaginationInfo paginationInfo = new PaginationInfo(vo);
 		if(vo.getSrc_title()!=null && !vo.getSrc_title().equals("")){
@@ -46,7 +40,7 @@ public class UBDMAController {
 		}
 		int iTotalCnt = service.BDMA010CNTQ(vo);
 		paginationInfo.setTotalRecordCount(iTotalCnt);
-		log.debug(paginationInfo.getPrameter());
+		
 		if(iTotalCnt>0){
 			paginationInfo.setList(service.BDMA010Q(vo));
 		}

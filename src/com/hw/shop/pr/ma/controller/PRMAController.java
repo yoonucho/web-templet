@@ -3,7 +3,7 @@ package com.hw.shop.pr.ma.controller;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -12,11 +12,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hw.shop.pr.ca.service.PRCAService;
 import com.hw.shop.pr.ma.service.PRMAService;
+import com.hw.shop.pr.ma.vo.PRMACMMTVo;
 import com.hw.shop.pr.ma.vo.PRMAVo;
 import com.hw.shop.util.PaginationInfo;
 import com.hw.shop.util.SMCommonUtil;
@@ -174,9 +176,82 @@ public class PRMAController {
 	 */
 	@RequestMapping
 	public ModelAndView PRMA040T(Map vo) {
-		
 		ModelAndView mav = new ModelAndView();
 		return mav;
-		
 	}
+	
+	
+	/**
+	 * 상품평 가져오기
+	 * @param vo
+	 * @return
+	 * @throws NoSuchMethodException 
+	 * @throws InvocationTargetException 
+	 * @throws IllegalAccessException 
+	 */
+	@RequestMapping
+	public ModelAndView PRMA050Q(PRMACMMTVo vo) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+		ModelAndView mav = new ModelAndView("jsonView");
+		PaginationInfo paginationInfo = new PaginationInfo(vo);
+		paginationInfo.setRecordCountPerPage(5);
+		int iTotalCnt = service.PRMA051Q(vo);
+		paginationInfo.setTotalRecordCount(iTotalCnt);
+		
+		log.debug(paginationInfo.getFirstRecordIndex());
+		log.debug(paginationInfo.getLastRecordIndex() );
+		
+		if(iTotalCnt>0){
+			paginationInfo.setList(service.PRMA050Q(vo));
+		}
+		//log.debug(paginationInfo.getPrameter());
+		HashMap map = new HashMap();
+		map.put("list", paginationInfo.getList());
+		map.put("paging", paginationInfo.getList());
+		mav.addObject("map", map);
+		
+		return mav;
+	}
+
+	/**
+	 * 상품평등록
+	 * @param vo
+	 * @return
+	 */
+	@RequestMapping(method=RequestMethod.POST)
+	public ModelAndView PRMA050T(PRMACMMTVo vo) {
+		ModelAndView mav = new ModelAndView("jsonView");
+		Map map = new HashMap();
+		map.put("cnt", service.PRMA050T(vo));
+		mav.addObject("map", map);
+		return mav;
+	}
+	
+	/**
+	 * 상품평 삭제
+	 * @param vo
+	 * @return
+	 */
+	@RequestMapping(method=RequestMethod.POST)
+	public ModelAndView PRMA051T(PRMACMMTVo vo) {
+		ModelAndView mav = new ModelAndView("jsonView");
+		Map map = new HashMap();
+		map.put("cnt", service.PRMA051T(vo));
+		mav.addObject("map", map);
+		return mav;
+	}
+	
+	/**
+	 * 상품평 수정
+	 * @param vo
+	 * @return
+	 */
+	@RequestMapping(method=RequestMethod.POST)
+	public ModelAndView PRMA052T(PRMACMMTVo vo) {
+		ModelAndView mav = new ModelAndView("jsonView");
+		Map map = new HashMap();
+		map.put("cnt", service.PRMA052T(vo));
+		mav.addObject("map", map);
+		return mav;
+	}
+	
 }
