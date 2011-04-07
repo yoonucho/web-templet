@@ -19,6 +19,7 @@
 		<typeAlias alias="PRMAVo" type="com.hw.shop.pr.ma.vo.PRMAVo" />
 		<typeAlias alias="PRCAVo" type="com.hw.shop.pr.ca.vo.PRCAVo" />
 		<typeAlias alias="DEMAVo" type="com.hw.shop.de.ma.vo.DEMAVo" />
+		<typeAlias alias="PRMACMMTVo" type="com.hw.shop.pr.ma.vo.PRMACMMTVo" />
 		
 	</typeAliases>
 	<mappers>
