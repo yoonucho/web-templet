@@ -14,9 +14,15 @@
 
 
 
+<!--	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"-->
+<!--		p:driverClassName="com.mysql.jdbc.Driver"-->
+<!--		p:url="jdbc:mysql://localhost:3306/shopinfo?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf8"-->
+<!--		p:username="root" p:password="" />-->
+	
+<!--	쿼리보기 드라이버-->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"
-		p:driverClassName="com.mysql.jdbc.Driver"
-		p:url="jdbc:mysql://localhost:3306/shopinfo?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf8"
+		p:driverClassName="net.sf.log4jdbc.DriverSpy"
+		p:url="jdbc:log4jdbc:mysql://localhost:3306/shopinfo?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf8"
 		p:username="root" p:password="" />
 		
 	<bean id="jdbcTemplate"
