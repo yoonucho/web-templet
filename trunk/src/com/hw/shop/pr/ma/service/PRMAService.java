@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hw.shop.pr.ma.dao.PRMADao;
+import com.hw.shop.pr.ma.vo.PRMACMMTVo;
 import com.hw.shop.pr.ma.vo.PRMAVo;
 
 @Service
@@ -33,4 +34,21 @@ public class PRMAService {
 	public int PRMA030T(PRMAVo vo){
 		return dao.PRMA030T(vo);
 	}
+	public List PRMA050Q(PRMACMMTVo vo){
+		return dao.PRMA050Q(vo);
+	}
+	public int PRMA051Q(PRMACMMTVo vo){
+		return dao.PRMA051Q(vo);
+	}
+	public int PRMA050T(PRMACMMTVo vo){
+		return dao.PRMA050T(vo);
+	}
+	public int PRMA051T(PRMACMMTVo vo){
+		return dao.PRMA051T(vo);
+	}
+	public int PRMA052T(PRMACMMTVo vo){
+		return dao.PRMA052T(vo);
+	}
+	
+	
 }

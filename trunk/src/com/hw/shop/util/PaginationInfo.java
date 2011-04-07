@@ -99,6 +99,22 @@ public class PaginationInfo {
 		return getParamBuf.toString();
 	}
 
+	
+	public void setTotalPageCount(int totalPageCount) {
+		this.totalPageCount = totalPageCount;
+	}
+	public void setFirstPageNoOnPageList(int firstPageNoOnPageList) {
+		this.firstPageNoOnPageList = firstPageNoOnPageList;
+	}
+	public void setLastPageNoOnPageList(int lastPageNoOnPageList) {
+		this.lastPageNoOnPageList = lastPageNoOnPageList;
+	}
+	public void setFirstRecordIndex(int firstRecordIndex) {
+		this.firstRecordIndex = firstRecordIndex;
+	}
+	public void setLastRecordIndex(int lastRecordIndex) {
+		this.lastRecordIndex = lastRecordIndex;
+	}
 	public void setPrameter(String prameter) {
 		this.prameter = prameter;
 	}
@@ -117,6 +133,8 @@ public class PaginationInfo {
 
 	public void setRecordCountPerPage(int recordCountPerPage) {
 		this.recordCountPerPage = recordCountPerPage;
+		setFirstRecordIndex(getFirstRecordIndex());
+		setLastRecordIndex(getLastRecordIndex());
 	}
 
 	public int getPageSize() {
