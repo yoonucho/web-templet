@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hw.shop.cm.ma.service.CMMAService;
@@ -43,7 +44,7 @@ public class CMMAController {
 		
 	}
 	
-	@RequestMapping
+	@RequestMapping(method=RequestMethod.POST)
 	public ModelAndView CMMA020Q(@ModelAttribute("frmChk")USMAVo vo,HttpServletRequest req, HttpServletResponse res) throws Exception {
 
 		ModelAndView mav = null;
