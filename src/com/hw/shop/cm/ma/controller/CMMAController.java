@@ -1,5 +1,6 @@
 package com.hw.shop.cm.ma.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -80,7 +81,7 @@ public class CMMAController {
 	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView CMMA030Q(SearchVo vo) throws Exception {
 
-		ModelAndView mav = null;
+		ModelAndView mav = new ModelAndView();
 		
 		if(vo.getDong()!=null && !"".equals(vo.getDong())){
 			vo.setDong("%"+vo.getDong()+"%");
