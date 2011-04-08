@@ -58,7 +58,7 @@
 	
 	$.tv.svrDiv_id="";
 	
-	$.tv.context="/tving";
+	$.tv.context="/vd";
 	
 	$.tv.imageDomain="";
 	
