@@ -4,7 +4,8 @@
 <html>
 <head>
 <title>게시판</title>
-<meta name="decorator" content="shop_EX"/>
+<!--<meta name="decorator" content="shop_EX"/>-->
+<meta name="decorator" content="shop_usr"/>
 <script type="text/javascript">
 
 $(document).ready(function(){
@@ -16,7 +17,7 @@ $(document).ready(function(){
 
 <body>
 
-<form:form action="${pageContext.request.contextPath}/cm/ma/CMMA020Q.do" method="post" commandName="frmChk" name="frmChk" id="frmChk">
+<form:form action="./CMMA020Q.do" method="post" commandName="frmChk" name="frmChk" id="frmChk">
 	아이디 : <form:input path="usr_id"/>
 	비밀번호 : <form:input path="usr_pw"/>
 	<input type="submit" value="로그인"/>
