@@ -14,6 +14,9 @@
 (function($) {
 	//함수들 실행.. 자주쓰이는 함수 정리
 	
+	
+	
+	
 	//함수..
 	$.fn.cut = function(len) {
 		var str = this;
@@ -246,6 +249,81 @@
 	$.tv.frp =function(val, precision){
 		var p = Math.pow(10, precision);
 		return Math.floor(val*p)/p;
+	};
+	
+	//xml ajax paging
+	$.tv.ajPXml= function(xml,fn, option, id){
+		var param = {
+				firstpageno:Number(jQuery(xml).find("firstpageno").text()),
+				firstPageNoOnPageList:Number(jQuery(xml).find("firstpagenoonpagelist").text()),
+				pageSize:Number(jQuery(xml).find("pagesize").text()),
+				totalPageCount:Number(jQuery(xml).find("totalpagecount").text()),
+				lastPageNo:Number(jQuery(xml).find("lastpageno").text()),
+				lastPageNoOnPageList:Number(jQuery(xml).find("lastpagenoonpagelist").text()),
+				currentPageNo:Number(jQuery(xml).find("currentpageno").text()),
+				lastrecordindex:Number(jQuery(xml).find("lastrecordindex").text())
+		};
+		$.tv.ajPaging(param,fn,option,id);
+	};
+	//json ajax paging
+	$.tv.ajPJson= function(json,fn, option, id){
+		$.tv.ajPaging(json,fn,option,id);
+	};
+	//ajax 페이징
+	$.tv.ajPaging= function(data,fn, option, id){
+		//시작페이지번호
+		var firstpageno = data.firstpageno;
+		//현 페이지에서 첫 시작페이지번호
+	    var firstPageNoOnPageList = data.firstPageNoOnPageList;
+	    //페이지 사이즈
+	    var pageSize = data.pageSize;
+	    //총페이지 사이즈
+	    var totalPageCount = data.totalPageCount;
+	    //마지막페이지번호
+	    var lastPageNo = data.lastPageNo;
+	    //현 페이지에서 마지막페이지번호
+	    var lastPageNoOnPageList = data.lastPageNoOnPageList;
+
+	    //현 페이지번호
+	    var currentPageNo = data.currentPageNo;
+	    //현 페이지에서 마지막 페이지 번호 
+	    var lastrecordindex = data.lastrecordindex;
+	    var sReturn ="	<div class=\'pageNavi\' style='text-align: center;margin-top: 10px;'>";
+	    
+		if(totalPageCount > pageSize){
+			if(firstPageNoOnPageList > pageSize){
+				sReturn += "		<span><a href=\"#\" class='pageNaviNo pageNaviNo"+(firstPageNoOnPageList-1)+"'><img src=\"img/ico/btn_preview01.gif\" width=\"13px\" height=\"13px\" alt=\"이전\"><\/a><\/span>";
+	        }else
+	        	sReturn += "		<span><img src=\"img/ico/btn_preview01.gif\" width=\"13px\" height=\"13px\" alt=\"이전\"><\/span>";
+		}
+		var i = firstPageNoOnPageList
+		for(i;i<=lastPageNoOnPageList;i++){
+			if(i==currentPageNo){
+				sReturn += "	<span><strong><a class='pageNaviNo pageNaviNo"+i+"' href=\"#\" >"+i+"<\/strong><\/a><\/span>";
+				if(lastPageNoOnPageList!=i)
+					sReturn += " |";
+			}else if(i==lastPageNoOnPageList){
+				sReturn += "	<span><a class='pageNaviNo pageNaviNo"+i+"' href=\"#\" >"+i+"<\/a><\/span>";
+	    	}else
+	    		sReturn += "	<span><a class='pageNaviNo pageNaviNo"+i+"' href=\"#\" >"+i+"<\/a><\/span> |";
+	    }
+		
+		if(totalPageCount > pageSize){
+			if(lastPageNoOnPageList < totalPageCount){
+				sReturn += "		<span><a href=\"#\" class='pageNaviNo pageNaviNo"+i+"'><img src=\"img/ico/btn_next01.gif\" width=\"13px\" height=\"13px\" alt=\"다음\"><\/a><\/span>";
+	        }else
+	        	sReturn += "		<span><a href=\"#\"><img src=\"img/ico/btn_next01.gif\" width=\"13px\" height=\"13px\" alt=\"다음\"><\/a><\/span>";
+		}
+		sReturn +="	<\/div>";
+		$("#"+id).html(sReturn);
+		//alert('e'+" "+$("#"+id).html());
+		$(".pageNaviNo").each(function (i){
+			$(this).click(function(){
+				option.currentpageno = $(this).attr("class").split("pageNaviNo").join("");
+				fn(option);
+				return false;
+			});
+		});
 	};
 	
 	$.tv.impl = {
