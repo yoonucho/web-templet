@@ -103,7 +103,7 @@ public class UPRMAController {
 		//log.debug(paginationInfo.getPrameter());
 		HashMap map = new HashMap();
 		map.put("list", paginationInfo.getList());
-		map.put("paging", paginationInfo.getList());
+		map.put("paging", paginationInfo);
 		mav.addObject("map", map);
 		
 		return mav;

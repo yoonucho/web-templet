@@ -36,7 +36,7 @@
 		</if>
 		order by
 		brd_seq_o desc
-		limit #{firstRecordIndex}, #{lastRecordIndex}
+		limit #{firstRecordIndex}, #{recordCountPerPage}
 	</select>
 
 	<select id="BDMA030Q" parameterType="java.util.HashMap"
@@ -435,7 +435,7 @@ SELECT prd_seq_no,
 FROM   product_cmmt
 where prd_seq_no = #{prd_seq_no}
 ORDER BY prd_seq_no, seq_no DESC
-limit #{firstRecordIndex}, #{lastRecordIndex}
+limit #{firstRecordIndex}, #{recordCountPerPage}
 	</select>
 <!--	댓글수조회-->
 	<select id="PRMA051Q" parameterType="PRMACMMTVo" resultType="int">
