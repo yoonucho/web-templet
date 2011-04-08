@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hw.shop.cm.ma.service.CMMAService;
+import com.hw.shop.common.SearchVo;
 import com.hw.shop.us.ma.vo.USMAVo;
 import com.hw.shop.util.SessionCookUtil;
 
@@ -33,17 +34,20 @@ public class CMMAController {
 	 */
 	@RequestMapping
 	public ModelAndView CMMA010Q(@ModelAttribute("frmChk")USMAVo vo,HttpServletRequest req, HttpServletResponse res) throws Exception {
-//		SessionCookUtil scUtil= new SessionCookUtil(req,res);
-//		Map dd = scUtil.getUserInfo();
-//		if(dd!=null)
-//			log.debug(dd.toString());
-		
-		
+
 		ModelAndView mav = new ModelAndView();
 		return mav;
 		
 	}
 	
+	/**
+	 * 로그인 프로세스
+	 * @param vo
+	 * @param req
+	 * @param res
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(method=RequestMethod.POST)
 	public ModelAndView CMMA020Q(@ModelAttribute("frmChk")USMAVo vo,HttpServletRequest req, HttpServletResponse res) throws Exception {
 
@@ -65,6 +69,26 @@ public class CMMAController {
 			}
 		}
 		return mav;
+		
+	}
+
+	/**우편번호 조회
+	 * @param vo
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(method=RequestMethod.GET)
+	public ModelAndView CMMA030Q(SearchVo vo) throws Exception {
+
+		ModelAndView mav = null;
+		
+		if(vo.getDong()!=null && !"".equals(vo.getDong())){
+			vo.setDong("%"+vo.getDong()+"%");
+			mav.addObject("list", service.CMMA030Q(vo));	
+		}
+		
+		return mav;
+		
 		
 	}
 }
