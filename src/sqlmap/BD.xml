@@ -775,5 +775,11 @@ SELECT a.*,
 SELECT * FROM member WHERE usr_id=#{usr_id} AND usr_pw =#{usr_pw}
 	</select>
 
+<!-- ////////////////우편번호////////// -->
+	<select id="CMMA030Q" parameterType="SearchVo" resultType="java.util.HashMap">
+SELECT *
+FROM   zip
+WHERE  dong LIKE #{dong} LIMIT 0,200
+	</select>
 
 </mapper>
