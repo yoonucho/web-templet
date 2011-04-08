@@ -11,6 +11,14 @@
 $(document).ready(function(){
 	
 });
+
+function parentPut(zip, addr){
+	var zip1 = zip.split("-")[0];
+	var zip2 = zip.split("-")[1];
+	alert(zip1+" "+ zip2 + " "+ addr);
+}
+	
+	
 </script>
 
 </head>
@@ -26,7 +34,7 @@ $(document).ready(function(){
 <table width="100%">
 	<thead>
 		<tr>
-			<th width="40px">우편번호</th>
+			<th width="100px">우편번호</th>
 			<th>주소</th>
 			<th>번지</th>
 		</tr>
@@ -36,8 +44,8 @@ $(document).ready(function(){
 <c:if test="${list !=null }">
 	<c:forEach var="map" items="${list}" varStatus="status">
 		<tr>
-			<td class="a-center">${map.zipcode }</td>
-			<td class="a-center">${map.sido } ${map.gugun } ${map.dong }</td>
+			<td class="a-center"><a href="" onclick="parentPut('${map.zipcode }','${map.sido } ${map.gugun } ${map.dong }');">${map.zipcode }</a></td>
+			<td class="a-center"><a href="" onclick="parentPut('${map.zipcode }','${map.sido } ${map.gugun } ${map.dong }');">${map.sido } ${map.gugun } ${map.dong }</a></td>
 			<td>${map.bunji }</td>
 		</tr>
 	</c:forEach>
