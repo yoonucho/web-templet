@@ -9,5 +9,12 @@
 <!--	키타-->
 	<decorator name="shop_EX" page="/WEB-INF/jsp/common/telmplet.jsp">
 		<pattern>/WEB-INF/jsp/*</pattern>
-	</decorator>							
+	</decorator>
+	
+<!--	사용자 페이지	-->
+	<decorator name="shop_usr" page="/WEB-INF/jsp/common/usr_telmplet.jsp">
+		<pattern>/WEB-INF/jsp/*</pattern>
+	</decorator>
+	
+								
 </decorators>
