@@ -12,47 +12,48 @@ $(document).ready(function(){
 	
 });
 $(window).load(function(){
-	getCmmt(1);
+	getCmmt({currentPageNo:1});
 });
 
 //코멘트 가져오기
-function getCmmt(currentPageNo){
+function getCmmt(option1){
+
 	var option = {
 		type : "get",
 		url: "./PRMA050Q.do",
-		data : {"currentPageNo":currentPageNo,"prd_seq_no":'${param.prd_seq_no}'},
-		success : showCmmt
+		data : {"currentPageNo":option1.currentpageno,"prd_seq_no":'${param.prd_seq_no}'},
+		success : function (json){
+			var html="";
+			if(!json){
+				return false;
+			}
+			
+			if(json.list.length>0){
+				var html ="";
+				var cnt = json.list.length;
+				jQuery.each(json.list, function (i) {
+					html+="<li id='li_"+i+"'>";
+					html+=$.tv.rpall(this.content,"\n","<br/>");
+					html+="&nbsp;<a href='#' id='a_"+i+"' onclick='showEdtCmmt(\""+this.seq_no+"\",\""+$.tv.rpall(this.content,"\n","<br/>")+"\","+i+");return false;'>수정</a>";
+					html+="&nbsp;<a href='#' onclick='delCmmt("+this.seq_no+");return false;'>삭제</a>";
+					html+="</li>";
+				});
+				$.tv.ajPJson(json.paging,getCmmt,option1,"divPaging");
+				
+			}
+			
+			$("#divCmmtList").html(html);
+		}
 	};
 	$.tv.getJson(option);
 }
 
-//코멘트 화면에 표시하기
-function showCmmt(json){
-	var html="";
-	if(!json){
-		return false;
-	}
-	
-	if(json.list.length>0){
-		var html ="";
-		var cnt = json.list.length;
-		jQuery.each(json.list, function (i) {
-			html+="<li id='li_"+i+"'>";
-			html+=$.tv.rpall(this.content,"\n","<br/>");
-			html+="&nbsp;<a href='#' id='a_"+i+"' onclick='showEdtCmmt(\""+this.seq_no+"\",\""+$.tv.rpall(this.content,"\n","<br/>")+"\","+i+");return false;'>수정</a>";
-			html+="&nbsp;<a href='#' onclick='delCmmt("+this.seq_no+");return false;'>삭제</a>";
-			html+="</li>";
-		});
-	}
-	
-	$("#divCmmtList").html(html);
-}
 //코멘트 삭제
 function delCmmt(seq_no){
 	var option = {
 		url: "./PRMA051T.do",
 		data : {"seq_no":seq_no},
-		success : function(){getCmmt(1);}
+		success : function(){getCmmt({currentPageNo:1});}
 	};
 	$.tv.getJson(option);
 }
@@ -62,7 +63,7 @@ function addCmmt(content){
 	var option = {
 		url: "./PRMA050T.do",
 		data : {"prd_seq_no":'${param.prd_seq_no}',"content":content},
-		success : function(){getCmmt(1);}
+		success : function(){getCmmt({currentPageNo:1});}
 	};
 	$.tv.getJson(option);
 }
@@ -85,7 +86,7 @@ function editCmmt(seq_no,content){
 	var option = {
 		url: "./PRMA052T.do",
 		data : {"seq_no":seq_no,"content":content},
-		success : function(){getCmmt(1);$("#divEdit").hide();}
+		success : function(){getCmmt({currentPageNo:1});$("#divEdit").hide();}
 	};
 	$.tv.getJson(option);
 }
