@@ -4,6 +4,9 @@ package com.hw.shop.bd.ma.vo;
 public class BDMAVo{ 
 	/**  */ 
 	private String brd_seq_no;
+	
+	private String brd_seq_no_p;
+	
 
  	/**  */ 
 	private String brd_type;
@@ -72,6 +75,12 @@ public class BDMAVo{
 	private String ffile10;
 	
 
+	public String getBrd_seq_no_p() {
+		return brd_seq_no_p;
+	}
+	public void setBrd_seq_no_p(String brd_seq_no_p) {
+		this.brd_seq_no_p = brd_seq_no_p;
+	}
 	public String getFfile1() {
 		return ffile1;
 	}

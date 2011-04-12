@@ -29,6 +29,11 @@ public class BDMAService {
 		return dao.BDMA030Q(vo);
 	}
 	
+	public String BDMA070CNTQ(BDMAVo vo){
+		return dao.BDMA070CNTQ(vo);
+	}
+	
+	
 	public int BDMA030T(BDMAVo vo){
 		return dao.BDMA030T(vo);
 	}
