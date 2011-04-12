@@ -3,6 +3,16 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="BD">
+
+<!--	게시판 order가져오기-->
+	<select id="BDMA070CNTQ" parameterType="java.util.HashMap" resultType="String">
+		select nvl2(min(brd_seq_no), min(brd_seq_no), '')
+		  from brd
+		 where brd_type=#board_type#
+		   and brd_seq_no like #brd_seq_no#
+		   and depth=#depth#		
+	</select>
+
 	<!-- 게시판 수조회 -->
 	<select id="BDMA010CNTQ" parameterType="SearchVo" resultType="int">
 		select count(*) as CNT
@@ -35,14 +45,14 @@
 			and brd_title like #{src_title}
 		</if>
 		order by
-		brd_seq_o desc
+		brd_seq_no desc
 		limit #{firstRecordIndex}, #{recordCountPerPage}
 	</select>
 
+<!--	게시판 max 값 가져오기-->
 	<select id="BDMA030Q" parameterType="java.util.HashMap"
 		resultType="String">
-		select ifnull(max(brd_seq_o), 0) as cnt from brd
-
+		select ifnull(max(brd_seq_no), '0') as cnt from brd
   </select>
 
 	<!-- 게시판 등록 -->
