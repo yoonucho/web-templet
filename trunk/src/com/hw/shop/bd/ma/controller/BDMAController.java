@@ -2,6 +2,7 @@ package com.hw.shop.bd.ma.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -97,7 +98,6 @@ public class BDMAController {
 	@RequestMapping
 	public ModelAndView BDMA030T(BDMAVo vo, MultipartHttpServletRequest mRqst) throws IllegalStateException, IOException {
 
-		Map pVo = mRqst.getParameterMap();
 		ToJinsu jin = new ToJinsu();
 		
 		MultiValueMap mulitFileMap = mRqst.getMultiFileMap();
@@ -106,14 +106,23 @@ public class BDMAController {
 		Map fileMap = util.getFileInfo(mulitFileMap, mRqst.getSession().getServletContext().getRealPath(""),FILE_PATH,false, files);
 		
 		String brdSeq = service.BDMA030Q(vo);
-		long seq= Long.parseLong(brdSeq);
-		seq++;
-		vo.setBrd_seq_no(jin.getJinsu(Long.toString(seq)));
-		vo.setBrd_seq_o(seq);
-//		pVo.put("brd_seq_no", jin.jinsuToDec(Integer.toString(seq)) );
-//		pVo.put("brd_type", "I" );
-		vo.setBrd_type("I") ;
 		
+		if(brdSeq.equals("0")){
+			vo.setBrd_seq_no("00001~");
+		}else{
+			String su  =Integer.toString(Integer.parseInt(jin.jinsuToDec(brdSeq.substring(0,brdSeq.length()-1)))+1);
+			String jin64 = jin.getJinsu(su);
+			int cnt = jin64.length();
+			if(jin64.length()<5){
+				for(int i=0; i< (5-cnt);i++){
+					jin64= "0"+jin64;
+				}
+			}
+			vo.setBrd_seq_no(jin64+"~");
+			
+		}
+		vo.setBrd_type("I") ;
+		vo.setDepth(1);
 		
 		fileMap.put("brd_seq_no", vo.getBrd_seq_no());
 		fileMap.put("reg_dt", vo.getReg_dt());
@@ -248,5 +257,70 @@ public class BDMAController {
 		fileInfo.put("fileName", req.getParameter("v_file_nm"));
 
 		return new ModelAndView("download", "fileMap", fileInfo);
+	}
+	
+	/**
+	 * 답글등록 프로세스
+	 * @param vo
+	 * @param mRqst
+	 * @return
+	 * @throws IllegalStateException
+	 * @throws IOException
+	 */
+	@RequestMapping
+	public ModelAndView BDMA070T(BDMAVo vo, MultipartHttpServletRequest mRqst) throws IllegalStateException, IOException {
+
+		Map pVo = mRqst.getParameterMap();
+		ToJinsu jin = new ToJinsu();
+		
+		MultiValueMap mulitFileMap = mRqst.getMultiFileMap();
+		SMCommonUtil util = new SMCommonUtil();
+		String[] files = {"file1","file2","file3"};
+		Map fileMap = util.getFileInfo(mulitFileMap, mRqst.getSession().getServletContext().getRealPath(""),FILE_PATH,false, files);
+		
+		String OriginNum = vo.getBrd_seq_no().substring(0,
+				vo.getBrd_seq_no().length() - 1);
+		
+		vo.setBrd_seq_no(OriginNum);
+		
+		String LastOrder = service.BDMA070CNTQ(vo);
+		String setOrder = "";
+		
+		if (LastOrder == null) {
+			LastOrder = "";
+		} else {
+			setOrder = LastOrder.substring(8, LastOrder.length()).replace("~",
+					"");
+		}
+		if (setOrder.length() == 0) {
+			setOrder = OriginNum + "zz~";
+		} else {
+			String Cnt="";
+			if (setOrder.length() > 2) {
+				Cnt = setOrder.substring(setOrder.length() - 2, setOrder
+						.length());
+			} else {
+				Cnt = setOrder;
+			}
+
+			BigDecimal val = new BigDecimal(jin.jinsuToDec(Cnt));
+			BigDecimal minusVal = val.subtract(new BigDecimal("1"));
+
+			setOrder = OriginNum + jin.getJinsu(minusVal.toString())
+					+ "~";
+		}
+		
+		vo.setBrd_seq_no(setOrder);
+				
+		fileMap.put("brd_seq_no", vo.getBrd_seq_no());
+		fileMap.put("reg_dt", vo.getReg_dt());
+		fileMap.put("reg_id", vo.getReg_id() );
+		fileMap.put("reg_nm", vo.getReg_nm());
+		
+		int resultVal  = service.BDMA030T(vo);
+		int resultVal1  = service.BDMA030FILET(fileMap,files);
+
+		ModelAndView mav = new ModelAndView("redirect:/bd/ma/BDMA010Q.do");
+		return mav; 
 	}
 }

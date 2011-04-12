@@ -33,6 +33,10 @@ public class BDMADao extends BaseDAO  {
 		return (String) getSqlSession().selectOne("BD.BDMA030Q",vo);
 	}
 	
+	public String BDMA070CNTQ(BDMAVo vo){
+		return (String) getSqlSession().selectOne("BD.BDMA070CNTQ",vo);
+	}
+	
 	public Map BDMA070Q(BDMAVo vo){
 		return (Map)getSqlSession().selectOne("BD.BDMA070Q", vo);
 	}
