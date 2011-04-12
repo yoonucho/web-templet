@@ -4,7 +4,8 @@
 <html>
 <head>
 <title>게시판</title>
-<meta name="decorator" content="shop_EX"/>
+<!--<meta name="decorator" content="shop_EX"/>-->
+<meta name="decorator" content="shop_usr"/>
 <script type="text/javascript">
 
 $(document).ready(function(){
