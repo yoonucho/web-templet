@@ -5,12 +5,12 @@
 <mapper namespace="BD">
 
 <!--	게시판 order가져오기-->
-	<select id="BDMA070CNTQ" parameterType="java.util.HashMap" resultType="String">
-		select nvl2(min(brd_seq_no), min(brd_seq_no), '')
+	<select id="BDMA070CNTQ" parameterType="BDMAVo" resultType="String">
+		select IFNULL(min(brd_seq_no), '')
 		  from brd
-		 where brd_type=#board_type#
-		   and brd_seq_no like #brd_seq_no#
-		   and depth=#depth#		
+		 where brd_type=#{brd_type}
+		   and brd_seq_no like #{brd_seq_no}
+		   and depth=#{depth}		
 	</select>
 
 	<!-- 게시판 수조회 -->
@@ -33,6 +33,7 @@
 		<!-- a.content, -->
 		a.reg_id,
 		a.reg_nm,
+		depth,
 		concat(substr(a.reg_dt,1,4),'-',substr(a.reg_dt,5,2),'-',substr(a.reg_dt,7,2))
 		as reg_dt,
 		a.udt_id,
@@ -59,7 +60,7 @@
 	<insert id="BDMA030T" parameterType="BDMAVo">
 		insert
 		into brd(
-		brd_seq_no,brd_type,brd_title,brd_hit,content,reg_id,reg_nm,reg_dt,brd_seq_o
+		brd_seq_no,brd_type,brd_title,brd_hit,content,reg_id,reg_nm,reg_dt,brd_seq_o,depth
 		)
 		values(
 		#{brd_seq_no},
@@ -70,7 +71,8 @@
 		#{reg_id},
 		#{reg_nm},
 		DATE_FORMAT(now(),'%Y%m%d%H%i%S'),
-		#{brd_seq_o}
+		#{brd_seq_o},
+		#{depth}
 		)
 
 	</insert>

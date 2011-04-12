@@ -122,7 +122,7 @@ public class BDMAController {
 			
 		}
 		vo.setBrd_type("I") ;
-		vo.setDepth(1);
+		vo.setDepth(0);
 		
 		fileMap.put("brd_seq_no", vo.getBrd_seq_no());
 		fileMap.put("reg_dt", vo.getReg_dt());
@@ -260,6 +260,20 @@ public class BDMAController {
 	}
 	
 	/**
+	 * 답글쓰기
+	 * @param vo
+	 * @return
+	 * @throws IllegalStateException
+	 * @throws IOException
+	 */
+	@RequestMapping
+	public ModelAndView BDMA080Q(BDMAVo vo) throws IllegalStateException, IOException {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("map",service.BDMA070Q(vo));
+		return mav; 
+	}
+	
+	/**
 	 * 답글등록 프로세스
 	 * @param vo
 	 * @param mRqst
@@ -268,7 +282,7 @@ public class BDMAController {
 	 * @throws IOException
 	 */
 	@RequestMapping
-	public ModelAndView BDMA070T(BDMAVo vo, MultipartHttpServletRequest mRqst) throws IllegalStateException, IOException {
+	public ModelAndView BDMA080T(BDMAVo vo, MultipartHttpServletRequest mRqst) throws IllegalStateException, IOException {
 
 		Map pVo = mRqst.getParameterMap();
 		ToJinsu jin = new ToJinsu();
@@ -278,18 +292,22 @@ public class BDMAController {
 		String[] files = {"file1","file2","file3"};
 		Map fileMap = util.getFileInfo(mulitFileMap, mRqst.getSession().getServletContext().getRealPath(""),FILE_PATH,false, files);
 		
-		String OriginNum = vo.getBrd_seq_no().substring(0,
-				vo.getBrd_seq_no().length() - 1);
+		String OriginNum = vo.getBrd_seq_no_p().substring(0,
+				vo.getBrd_seq_no_p().length() - 1);
 		
-		vo.setBrd_seq_no(OriginNum);
+		vo.setBrd_seq_no(OriginNum+"%");
+		vo.setBrd_type("I");
+		
+		//기존깊이보다 한단계 추가해야함
+		vo.setDepth(vo.getDepth()+1);
 		
 		String LastOrder = service.BDMA070CNTQ(vo);
 		String setOrder = "";
 		
-		if (LastOrder == null) {
+		if (LastOrder == null || LastOrder.length()==0) {
 			LastOrder = "";
 		} else {
-			setOrder = LastOrder.substring(8, LastOrder.length()).replace("~",
+			setOrder = LastOrder.substring(5, LastOrder.length()).replace("~",
 					"");
 		}
 		if (setOrder.length() == 0) {
