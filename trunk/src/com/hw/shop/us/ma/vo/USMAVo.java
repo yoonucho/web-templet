@@ -1,10 +1,15 @@
 package com.hw.shop.us.ma.vo;
 
+import org.springmodules.validation.bean.conf.loader.annotation.handler.Length;
+import org.springmodules.validation.bean.conf.loader.annotation.handler.NotBlank;
+
 public class USMAVo {
 	/**  */ 
+	@NotBlank  
+    @Length(min=5,max = 12)  
 	private String usr_id;
 
- 	/**  */ 
+ 	/**  */
 	private String usr_pw;
 
  	/**  */ 

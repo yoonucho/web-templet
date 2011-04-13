@@ -24,6 +24,27 @@
 	<!--
 		<tx:annotation-driven transaction-manager="transactionManager" />
 	-->
+	
+	<mvc:interceptors>
+		<bean name="playyInterceptor" class="com.hw.shop.util.ShopInterceptor"/>
+	</mvc:interceptors>
+
+
+	<bean id="validator" class="org.springmodules.validation.bean.BeanValidator"
+		p:configurationLoader-ref="configurationLoader" />
+
+<!--	수정필요합니다ㅜㅜ;; 지금 안됨.-->
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+		        <value>config.message</value>
+		        <value>config.error</value>
+        	</list>
+		</property> 
+	</bean>			
+
+	<bean id="configurationLoader"
+		class="org.springmodules.validation.bean.conf.loader.annotation.AnnotationBeanValidationConfigurationLoader" />
 
 	<!--파일다운로드 뷰지정-->
 	
@@ -43,8 +64,6 @@
 		p:order="2" p:viewClass="org.springframework.web.servlet.view.JstlView"
 		p:prefix="/WEB-INF/jsp/" p:suffix=".jsp" />
 
-	<mvc:interceptors>
-		<bean name="playyInterceptor" class="com.hw.shop.util.ShopInterceptor"/>
-	</mvc:interceptors>
+
 
 </beans>
