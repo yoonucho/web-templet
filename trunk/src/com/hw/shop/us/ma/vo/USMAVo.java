@@ -6,7 +6,7 @@ import org.springmodules.validation.bean.conf.loader.annotation.handler.NotBlank
 public class USMAVo {
 	/**  */ 
 	@NotBlank(errorCode="error.not.blank")
-    @Length(errorCode="error.Length",min=5,max = 12)  
+    @Length(errorCode="error.length",min=5,max = 12)  
 	private String usr_id;
 
  	/**  */
