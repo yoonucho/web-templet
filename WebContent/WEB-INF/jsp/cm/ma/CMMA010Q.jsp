@@ -19,8 +19,8 @@ $(document).ready(function(){
 
 <form:form commandName="frmChk" name="frmChk" id="frmChk" action="./CMMA020Q.do" method="post">
 <form:errors/>
-	아이디 : <form:input path="usr_id"/><form:errors path="usr_id" /><br/>
-	비밀번호 : <form:input path="usr_pw"/><form:errors path="usr_pw" />
+	아이디 : <form:input path="usr_id"/><form:errors path="usr_id" cssClass="error"/>
+	비밀번호 : <form:input path="usr_pw"/><form:errors path="usr_pw" cssClass="error"/>
 	<input type="submit" value="로그인"/>
 </form:form>
 
