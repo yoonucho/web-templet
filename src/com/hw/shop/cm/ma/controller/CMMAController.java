@@ -9,11 +9,12 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
+import org.springframework.validation.Validator;
 
 import com.hw.shop.cm.ma.service.CMMAService;
 import com.hw.shop.common.SearchVo;
@@ -28,13 +29,15 @@ public class CMMAController {
 
 	Logger log = Logger.getLogger(getClass());
 	
+    
+//    private VoValidation validator;
+
     @Autowired  
     private Validator validator;  
       
     public void setValidator(Validator validator) {  
         this.validator = validator;  
     }  
-	
 	/**
 	 * 로그인창
 	 * @param vo
@@ -61,13 +64,14 @@ public class CMMAController {
 	public ModelAndView CMMA020Q(@ModelAttribute("frmChk") USMAVo vo,BindingResult result,
 			HttpServletRequest req, HttpServletResponse res) throws Exception {
 
-
-
 		ModelAndView mav = null;
-		validator.validate(vo, result);  
+		
+//		validator = new VoValidation();
+//		validator.validate(vo,result);
+		validator.validate(vo, result);
         if (result.hasErrors()) { 
         	return new ModelAndView("/cm/ma/CMMA010Q",result.getModel()); 
-        }  
+        } 
 		Map usrInfo = service.CMMA020Q(vo);
 		if(null ==usrInfo){
 			mav = new ModelAndView("redirect:/cm/ma/CMMA010Q.do");
