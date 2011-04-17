@@ -17,7 +17,7 @@ $(window).load(function(){
 
 //코멘트 가져오기
 function getCmmt(option1){
-
+	$.hwBlock("divComment");
 	var option = {
 		type : "get",
 		url: "./PRMA050Q.do",
@@ -43,6 +43,7 @@ function getCmmt(option1){
 			}
 			
 			$("#divCmmtList").html(html);
+			$.hwUnBlock("divComment");
 		}
 	};
 	$.tv.getJson(option);
@@ -90,6 +91,13 @@ function editCmmt(seq_no,content){
 	};
 	$.tv.getJson(option);
 }
+
+function returnZip(){
+	var zip1 = zip.split("-")[0];
+	var zip2 = zip.split("-")[1];
+	alert(zip1+" "+ zip2 + " "+ addr);	
+}
+
 </script>
 
 </head>
@@ -173,7 +181,7 @@ function editCmmt(seq_no,content){
 		</table>
 		</form>
 	</div>
-<div>
+<div id="divComment">
 	코
 	<ul id="divCmmtList">
 	
@@ -195,5 +203,20 @@ function editCmmt(seq_no,content){
 	<a href="#" id="edtBtn">저장</a>
 	<a href="#" onclick="$('#divEdit').hide();return false;">닫기</a>
 </div>
+
+
+<div id="divZipCodeView11" style="cursor: default">
+<fieldset>
+	<input name="dong" type="text" value="${param.dong}"/>
+	<input type="button" value="검색"/>
+	<ul id="ulZip">
+		<li><a href="#" onclick="$.showZip();" >동홍동 1</a> </li>
+		<li><a href="#" onclick="alert(12);$('#_divZipCodeView').remove();return false;" >동홍동2</a> </li>
+		
+	</ul>
+ </fieldset>
+</div> 
+
+
 </body>
 </html>
