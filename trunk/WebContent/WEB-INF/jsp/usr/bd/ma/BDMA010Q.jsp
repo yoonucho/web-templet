@@ -56,7 +56,12 @@ $(document).ready(function(){
 	<c:forEach var="map" items="${paginationInfo.list}" varStatus="status">
 				<tr>
 					<td class="a-center">232</td>
-					<td><a href="./BDMA070Q.do?brd_seq_no=${map.brd_seq_no }${paginationInfo.prameter}">${map.brd_title }</a></td>
+					<td>
+						<c:forEach var="i" begin="1" end="${map.depth }" step="1">
+						...
+						</c:forEach>
+						<a href="./BDMA070Q.do?brd_seq_no=${map.brd_seq_no }${paginationInfo.prameter}">${map.brd_title }</a>
+					</td>
 					<td>${map.reg_nm }</td>
 					<td>${map.reg_dt }</td>
 					<td>${map.brd_hit }</td>
