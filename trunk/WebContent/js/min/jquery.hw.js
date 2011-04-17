@@ -14,7 +14,17 @@
 (function($) {
 	//함수들 실행.. 자주쓰이는 함수 정리
 	
-	
+	$.block1 = function(str) {
+		console.log(str);
+		
+		alter(str);
+		$('#'+str).block({ 
+	        message: '<h1>Processing</h1>', 
+	        css: { border: '3px solid #a00' } 
+	    });
+		$('#'+str).addClass("hw_black");
+		return "";
+	};
 	
 	
 	//함수..
