@@ -1,5 +1,6 @@
 package com.hw.shop.cm.ma.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -105,6 +106,28 @@ public class CMMAController {
 		if(vo.getDong()!=null && !"".equals(vo.getDong())){
 			vo.setDong("%"+vo.getDong()+"%");
 			mav.addObject("list", service.CMMA030Q(vo));	
+		}
+		
+		return mav;
+		
+		
+	}
+	
+	/**
+	 * 우편번호 json 검색
+	 * @param vo
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(method=RequestMethod.GET)
+	public ModelAndView CMMA040Q(SearchVo vo) throws Exception {
+
+		ModelAndView mav = new ModelAndView("jsonView");
+		Map map = new HashMap();
+		if(vo.getDong()!=null && !"".equals(vo.getDong())){
+			vo.setDong("%"+vo.getDong()+"%");
+			map.put("list", service.CMMA030Q(vo));
+			mav.addObject("map", map);
 		}
 		
 		return mav;
