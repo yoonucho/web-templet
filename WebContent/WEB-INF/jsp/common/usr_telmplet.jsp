@@ -14,7 +14,7 @@
 	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/common/css/page.css" />
 	<script type="text/javascript" src="${pageContext.request.contextPath}/common/js/default.js"></script>
 
-	<%@ include file="/WEB-INF/jsp/common/include/cssNscript.jsp"%>
+	<%@ include file="/WEB-INF/jsp/common/include/usr_cssNscript.jsp"%>
 	<script type="text/javascript">
 		$(document).ready(function() {
 	
@@ -94,6 +94,10 @@
 					<li><a href="#"><img src="${pageContext.request.contextPath}/common/images/mypage/right_menu03_off.gif" alt="찜 목록" /></a></li>
 					<li><a href="#"><img src="${pageContext.request.contextPath}/common/images/mypage/right_menu04_off.gif" alt="팬 목록" /></a></li>
 					<li><a href="#"><img src="${pageContext.request.contextPath}/common/images/mypage/right_menu05_on.gif" alt="프로파일 관리" /></a></li>
+					<li><a href="${pageContext.request.contextPath}/cm/ma/CMMA010Q.do">로그인</a></li>
+					<li><a href="${pageContext.request.contextPath}/usr/bd/ma/BDMA010Q.do">게시판</a></li>
+					<li><a href="${pageContext.request.contextPath}/usr/pr/ma/PRMA010Q.do">제품</a></li>
+					<li><a href="${pageContext.request.contextPath}/cm/ma/CMMA030Q.do">우편번호</a></li>
 				</ul>
 
 				<div class="btn_apply"><a href="#"><img src="${pageContext.request.contextPath}/common/images/mypage/btn_aapply01.gif" alt="월정액 신청하기" /></a></div>
