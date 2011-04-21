@@ -98,6 +98,11 @@ function returnZip(){
 	alert(zip1+" "+ zip2 + " "+ addr);	
 }
 
+function buyNow(){
+	$('#frmSave').attr("action","${pageContext.request.contextPath}/usr/de/ma/DEMA050Q.do");
+	$('#frmSave').submit();
+}
+
 </script>
 
 </head>
@@ -157,7 +162,7 @@ function returnZip(){
 			<tr>
 				<td width="127" align=center class="txt_pro" nowrap bgcolor="#FFFFFF">옵션</td>
 				<td width="510" bgcolor="#FFFFFF">
-					<select name="cnt">
+					<select name="del_cnt">
 						<option value="1">1개</option>
 						<option value="2">2개</option>
 						<option value="3">3개</option>
@@ -174,8 +179,8 @@ function returnZip(){
 			<tr>
 				<td width="127" align=center class="txt_pro" nowrap bgcolor="#FFFFFF">주문</td>
 				<td width="510" bgcolor="#FFFFFF">
-					<a href="">장바구니담기</a>
-					<a href="">바로주문하기</a>
+					<a href="#">장바구니담기</a>
+					<a href="#" onclick="buyNow();">바로주문하기</a>
 				</td>
 			</tr>
 		</table>
