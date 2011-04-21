@@ -12,6 +12,7 @@
  *************************************************************************
  */
 (function($) {
+	var commonFn = null;
 	//div block
     $.hwBlock = function(str)
     {
@@ -22,6 +23,20 @@
 		
 		$('#'+str).addClass(str+"black");
     },
+    $.scrollDown = function(str)
+    {
+    	$("body").animate( {scrollTop: $("#"+str).offset().top}, 600);
+    },
+    //데이터 초기화
+    $.dtInit = function(str)
+    {
+		$('#'+str).find("input:text").val("");
+		$('#'+str).find("select").each(function (){
+			$(this).find("option:eq(0)").attr("selected",true);	
+		});
+		
+		$('#'+str).find("textarea").val("");
+    },
     //div unblock
     $.hwUnBlock = function(str)
     {
@@ -30,7 +45,8 @@
     },
     //우편번호 가져오기 셋 시작
     //사용법	$.showZip();
-    $.showZip = function(){
+    $.showZip = function(option){
+    	
     	var zipHtml = 
     		"<div id=\"_divZipCodeView\" style=\"cursor: default\">"+
     		"<fieldset>"+
@@ -43,6 +59,9 @@
     		"</div> ";
     	$("body").append(zipHtml);
     	$.blockUI({ message: $('#_divZipCodeView') }); 
+    	if(option.fn != undefined){
+    		commonFn = option.fn;
+    	}
     },
     $.closeZip = function(){
     	var opt = {"onUnblock":function(){$('#_divZipCodeView').remove();}};
@@ -72,8 +91,13 @@
 							addr += " "+this.bunji;	
 						}
 						
+						
+						var zipcode = this.zipcode.split("-")[0]+"-"+this.zipcode.split("-")[1];
+						
 						html+="<li>";
-						html+="<a href='#' onclick='$.setZipcodeData(\""+this.zipcode+"\",\""+addr+"\");return false;'>"+addr+"</a>";
+						
+						
+						html+="<a href='#' onclick='$.setZipcodeData(\""+this.zipcode+"\",\""+addr+"\");return false;'>"+"("+zipcode+")"+addr+"</a>";
 						html+="</li>";
 						
 						$("#_ulZipDatas").html(html);
@@ -85,9 +109,10 @@
     	$.tv.getJson(option);
     },
     $.setZipcodeData = function(zip, addr){
-    	var zip1 = zip.split("-")[0];
-    	var zip2 = zip.split("-")[1];
-    	alert(zip1+" "+ zip2 + " "+ addr);
+    	if(commonFn!=null){
+    		commonFn(zip,addr);
+    		commonFn=null;
+    	}
     	$.closeZip();
     },
     //우편번호 가져오기 셋 끝
