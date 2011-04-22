@@ -21,7 +21,7 @@ public class DEMAController {
 	@Autowired
 	private DEMAService service;
 
-	Logger log = Logger.getLogger(DEMAController.class);
+	Logger log = Logger.getLogger(getClass());
 	
 
 	/**
@@ -130,6 +130,20 @@ public class DEMAController {
 		
 		ModelAndView mav = new ModelAndView("redirect:/de/ma/DEMA030Q.do?del_seq_no="+vo.getDel_seq_no());
 		int cnt = service.DEMA040T(vo);
+		return mav;
+		
+	}
+	
+	/**
+	 * 상품 바로 주문
+	 * @param vo
+	 * @return
+	 */
+	@RequestMapping
+	public ModelAndView DEMA050Q(DEMAVo vo) {
+		
+		ModelAndView mav = new ModelAndView();
+		
 		return mav;
 		
 	}

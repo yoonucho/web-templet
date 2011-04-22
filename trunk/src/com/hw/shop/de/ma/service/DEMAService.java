@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hw.shop.de.ma.dao.DEMADao;
+import com.hw.shop.de.ma.vo.DELIREQVo;
 import com.hw.shop.de.ma.vo.DEMAVo;
 
 @Service
@@ -51,4 +52,9 @@ public class DEMAService {
 	public int DEMA040T(DEMAVo vo) {
 		return dao.DEMA040T(vo);
 	}
+	
+	public List DEMA050Q(DELIREQVo vo) {
+		return dao.DEMA050Q(vo);
+	}
+	
 }

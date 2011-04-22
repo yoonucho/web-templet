@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
+import com.hw.shop.de.ma.vo.DELIREQVo;
 import com.hw.shop.de.ma.vo.DEMAVo;
 import com.hw.shop.util.BaseDAO;
 @Repository
@@ -43,4 +44,9 @@ public class DEMADao extends BaseDAO{
 	public int DEMA040T(DEMAVo vo){
 		return getSqlSession().update("BD.DEMA040T",vo);
 	}
+	
+	public List DEMA050Q(DELIREQVo vo){
+		return getSqlSession().selectList("BD.DEMA050Q",vo);
+	}
+	
 }
