@@ -67,12 +67,14 @@ function dataInit(){
 	</c:forEach>
 </c:if>
 		</table>
+		<div id="divComment">
+			<input type="hidden" name="totalVal" value="${totalVal }"/> 
+			총 가격 : ${totalVal } 원
+		
+		</div>
 		</form>
 	</div>
-<div id="divComment">
-	총 가격 : ${totalVal } 원
 
-</div>
 
 <div>
 <table id="tbData">
