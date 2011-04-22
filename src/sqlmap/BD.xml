@@ -782,6 +782,35 @@ SELECT a.*,
 		select count(*) as CNT
 		FROM deli_req
 	</select>
+	
+<!--	제품 구매페이지-->
+	<select id="DEMA050Q" parameterType="DELIREQVo" resultType="java.util.HashMap">
+	
+SELECT a.*,
+       b.del_cnt
+FROM   ( SELECT prd_seq_no,
+               cate_seq_no,
+               prd_nm     ,
+               prd_price  ,
+               prd_save   ,
+               prd_img
+       FROM    product
+       WHERE   prd_seq_no IN 
+	<foreach collection="prd_seq_no_list" item="item" index="index" open="(" separator="," close=")">  
+		#{item.prd_seq_no} 
+	</foreach>
+       )
+       a
+       LEFT JOIN
+	<foreach collection="prd_seq_no_list" item="item" index="index" open="(" separator="UNION ALL" close=")">  
+				SELECT #{item.prd_seq_no}  AS prd_seq_no,
+                      #{item.del_cnt}   AS del_cnt
+
+	</foreach>
+              b
+       ON     a.prd_seq_no = b.prd_seq_no
+
+	</select>
 <!-- ////////////////로그인////////// -->
 	<select id="CMMA020Q" parameterType="USMAVo" resultType="java.util.HashMap">
 SELECT * FROM member WHERE usr_id=#{usr_id} AND usr_pw =#{usr_pw}
