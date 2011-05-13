@@ -43,10 +43,7 @@ function dataInit(){
 		<h3 id="adduser">
 			결제하기
 		</h3>
-		<form action="${pageContext.request.contextPath}/pr/ma/PRMA031Q.do"
-		name="frmSave" id="frmSave" method="post" class="form">
-		<input type="hidden" name="prd_seq_no" value="${map.prd_seq_no }" /> 
-		
+		<form action="./DEMA050Q.do" name="frmSave" id="frmSave" method="post" class="form">
 		<table>
 			<tr>
 				<th>상품정보 옵션</th>
@@ -60,7 +57,10 @@ function dataInit(){
 	<c:set var="totalVal" value="${totalVal+(map.prd_price*map.del_cnt) }" />
 			<tr>
 				<td>${map.prd_nm }</td>
-				<td>${map.del_cnt } 개</td>
+				<td>
+					<input type="hidden" name="prd_seq_no" value="${map.prd_seq_no }" />
+					<input name="del_cnt" value="${map.del_cnt }" style="width:30px;" type="text" />개 <input type="submit" value="적용">
+				</td>
 				<td>${map.prd_price } 원</td>
 				<td>없음</td>
 			</tr>
