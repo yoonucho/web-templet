@@ -805,7 +805,6 @@ FROM   ( SELECT prd_seq_no,
 	<foreach collection="prd_seq_no_list" item="item" index="index" open="(" separator="UNION ALL" close=")">  
 				SELECT #{item.prd_seq_no}  AS prd_seq_no,
                       #{item.del_cnt}   AS del_cnt
-
 	</foreach>
               b
        ON     a.prd_seq_no = b.prd_seq_no
