@@ -57,4 +57,20 @@ public class DEMAService {
 		return dao.DEMA050Q(vo);
 	}
 	
+	public int DEMA050T(DEMAVo vo) {
+		
+		long del_seq_no  = dao.DEMA050_2Q();
+		vo.setDel_seq_no(del_seq_no);
+		int returnInt = dao.DEMA050T(vo);
+		
+		for(int i = 0; i < vo.getPrd_seq_nos().length; i++){
+			DEMAVo product = new DEMAVo();
+			product.setDel_seq_no(del_seq_no);
+			product.setPrd_seq_no(vo.getPrd_seq_nos()[i]);
+			product.setDel_cnt(vo.getDel_cnts()[i]);
+			dao.DEMA050_1T(product);
+		}
+		return returnInt;
+	}
+	
 }
