@@ -30,12 +30,21 @@
     //데이터 초기화
     $.dtInit = function(str)
     {
+    	//아이디 하위자료 초기화
 		$('#'+str).find("input:text").val("");
 		$('#'+str).find("select").each(function (){
 			$(this).find("option:eq(0)").attr("selected",true);	
 		});
 		
 		$('#'+str).find("textarea").val("");
+		
+    	//아이디 하위자료 초기화
+		$('.'+str).find("input:text").val("");
+		$('.'+str).find("select").each(function (){
+			$(this).find("option:eq(0)").attr("selected",true);	
+		});
+		
+		$('.'+str).find("textarea").val("");
     },
     //div unblock
     $.hwUnBlock = function(str)
