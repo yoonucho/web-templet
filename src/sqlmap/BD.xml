@@ -810,6 +810,84 @@ FROM   ( SELECT prd_seq_no,
        ON     a.prd_seq_no = b.prd_seq_no
 
 	</select>
+	
+<!--	제품구매 고유번호 가져오기-->
+	<select id="DEMA050_2Q" resultType="long">
+			select
+			ifnull(max(del_seq_no)+1, 1) as cnt from deli_req
+	</select>
+
+
+<insert id="DEMA050_1T" parameterType="DEMAVo">
+	<selectKey resultType="int" keyProperty="del_p_seq_no" order="BEFORE">
+		select
+		ifnull(max(del_p_seq_no)+1, 1) as cnt from deli_product
+	</selectKey>
+
+INSERT INTO deli_product
+            (del_p_seq_no,
+             del_seq_no,
+             prd_seq_no,
+             del_cnt)
+VALUES (#{del_p_seq_no},
+        #{del_seq_no},
+        #{prd_seq_no},
+        #{del_cnt});
+</insert>
+
+	
+<!--	제품구매 등록-->
+	<insert id="DEMA050T" parameterType="DEMAVo">
+INSERT INTO deli_req (
+    del_seq_no,
+    reg_dt,
+    usr_id,
+    addr1,
+    addr2,
+    zip1,
+    zip2,
+    tel1,
+    tel2,
+    tel3,
+    cell1,
+    cell2,
+    cell3,
+    del_msg,
+    del_pee,
+    del_pay,
+    STATUS,
+    to_usr,
+    from_usr,
+    reg_id,
+    reg_nm
+) 
+VALUES
+    (
+        #{del_seq_no},
+        DATE_FORMAT(now(),'%Y%m%d%H%i%S'),
+        #{usr_id},
+        #{addr1},
+        #{addr2},
+        #{zip1},
+        #{zip2},
+        #{tel1},
+        #{tel2},
+        #{tel3},
+        #{cell1},
+        #{cell2},
+        #{cell3},
+        #{del_msg},
+        #{del_pee},
+        #{del_pay},
+        #{status},
+        #{to_usr},
+        #{from_usr},
+        #{reg_id},
+        #{reg_nm}
+    ) ;
+
+	</insert>
+	
 <!-- ////////////////로그인////////// -->
 	<select id="CMMA020Q" parameterType="USMAVo" resultType="java.util.HashMap">
 SELECT * FROM member WHERE usr_id=#{usr_id} AND usr_pw =#{usr_pw}
