@@ -49,4 +49,16 @@ public class DEMADao extends BaseDAO{
 		return getSqlSession().selectList("BD.DEMA050Q",vo);
 	}
 	
+	public int DEMA050T(DEMAVo vo){
+		return getSqlSession().update("BD.DEMA050T",vo);
+	}
+	//제품 수량 등록
+	public int DEMA050_1T(DEMAVo vo){
+		return getSqlSession().update("BD.DEMA050_1T",vo);
+	}
+	public long DEMA050_2Q(){
+		return (Long) getSqlSession().selectOne("BD.DEMA050_2Q");
+	}
+	
+	
 }

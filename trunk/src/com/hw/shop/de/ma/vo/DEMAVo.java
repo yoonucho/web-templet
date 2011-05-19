@@ -3,7 +3,18 @@ package com.hw.shop.de.ma.vo;
 public class DEMAVo {
 	/** 배송고유번호 */ 
 	private long del_seq_no;
+	
+	private long[] del_seq_nos;
 
+	private long[] del_cnts;
+	
+	//deli_product 변수
+	private long del_p_seq_no;
+	private long prd_seq_no;
+	private long del_cnt;
+
+	private long[] prd_seq_nos;
+	
  	/** 배송일자 */ 
 	private String reg_dt;
 
@@ -73,7 +84,46 @@ public class DEMAVo {
  	/** 수정일 */ 
 	private String udt_dt;
 
- 	public void setDel_seq_no(long del_seq_no) { 
+	
+	
+	
+ 	public long[] getPrd_seq_nos() {
+		return prd_seq_nos;
+	}
+	public void setPrd_seq_nos(long[] prd_seq_nos) {
+		this.prd_seq_nos = prd_seq_nos;
+	}
+	public long getDel_p_seq_no() {
+		return del_p_seq_no;
+	}
+	public void setDel_p_seq_no(long del_p_seq_no) {
+		this.del_p_seq_no = del_p_seq_no;
+	}
+	public long getPrd_seq_no() {
+		return prd_seq_no;
+	}
+	public void setPrd_seq_no(long prd_seq_no) {
+		this.prd_seq_no = prd_seq_no;
+	}
+	public long getDel_cnt() {
+		return del_cnt;
+	}
+	public void setDel_cnt(long del_cnt) {
+		this.del_cnt = del_cnt;
+	}
+	public long[] getDel_seq_nos() {
+		return del_seq_nos;
+	}
+	public void setDel_seq_nos(long[] del_seq_nos) {
+		this.del_seq_nos = del_seq_nos;
+	}
+	public long[] getDel_cnts() {
+		return del_cnts;
+	}
+	public void setDel_cnts(long[] del_cnts) {
+		this.del_cnts = del_cnts;
+	}
+	public void setDel_seq_no(long del_seq_no) { 
 		this.del_seq_no = del_seq_no;
 	}
 	/** 배송고유번호 */ 
