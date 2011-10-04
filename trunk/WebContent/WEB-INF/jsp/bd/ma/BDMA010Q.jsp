@@ -17,6 +17,7 @@ $(document).ready(function(){
 
 <body>
 
+
                 <div id="box">
                 	<h3>게시글 목록</h3>
                 	
