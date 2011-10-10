@@ -98,8 +98,9 @@
 					<li><a href="${pageContext.request.contextPath}/usr/bd/ma/BDMA010Q.do">게시판</a></li>
 					<li><a href="${pageContext.request.contextPath}/usr/pr/ma/PRMA010Q.do">제품</a></li>
 					<li><a href="${pageContext.request.contextPath}/cm/ma/CMMA030Q.do">우편번호</a></li>
+					<li><a href="${pageContext.request.contextPath}/cm/ma/CMMA030Q.do">배송조회</a></li>
+					<li><a href="${pageContext.request.contextPath}/cm/ma/CMMA030Q.do">구매목록조회</a></li>
 				</ul>
-
 				<div class="btn_apply"><a href="#"><img src="${pageContext.request.contextPath}/common/images/mypage/btn_aapply01.gif" alt="월정액 신청하기" /></a></div>
 				
 			</div><!-- side end-->
